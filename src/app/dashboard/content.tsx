@@ -1,12 +1,21 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import EntryEditor from "@/components/entry-editor";
 import EntrySidebar from "./sidebar";
 import EntryDetail from "./detail";
-import CalendarView from "@/components/visualizations/calendar-view";
-import MoodTrend from "@/components/visualizations/mood-trend";
 import type { Entry } from "@/lib/entries/actions";
+
+// Dynamic imports to avoid SSR issues with chart libraries
+const CalendarView = dynamic(
+  () => import("@/components/visualizations/calendar-view"),
+  { ssr: false }
+);
+const MoodTrend = dynamic(
+  () => import("@/components/visualizations/mood-trend"),
+  { ssr: false }
+);
 
 const TABS = [
   { key: "journal", label: "Journal" },
@@ -41,6 +50,12 @@ export default function DashboardContent({
     setShowEditor(false);
   }
 
+  function handleUpdated(updated: Entry) {
+    setEntries((prev) =>
+      prev.map((e) => (e.id === updated.id ? updated : e))
+    );
+  }
+
   function handleNavigateToEntry(entryId: string) {
     setSelectedId(entryId);
     setShowEditor(false);
@@ -50,12 +65,6 @@ export default function DashboardContent({
   function handleNewEntry() {
     setSelectedId(null);
     setShowEditor(true);
-  }
-
-  function handleUpdated(updated: Entry) {
-    setEntries((prev) =>
-      prev.map((e) => (e.id === updated.id ? updated : e))
-    );
   }
 
   function handleDeleted(deletedId: string) {
@@ -96,7 +105,6 @@ export default function DashboardContent({
       {/* Tab content */}
       {tab === "journal" && (
         <div className="flex gap-0 min-h-[calc(100vh-12rem)]">
-          {/* Left sidebar: entry tree */}
           <div className="w-80 shrink-0 border-r border-zinc-800 pr-0">
             <EntrySidebar
               entries={entries}
@@ -105,9 +113,7 @@ export default function DashboardContent({
             />
           </div>
 
-          {/* Right panel: detail/editor + global New button */}
           <div className="flex-1 pl-6 flex flex-col">
-            {/* + New Entry — always visible at top-right when NOT already editing */}
             {!showEditor && entries.length > 0 && (
               <div className="flex justify-end mb-2">
                 <button

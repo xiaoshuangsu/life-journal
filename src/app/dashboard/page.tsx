@@ -1,6 +1,8 @@
 import { redirect } from "next/navigation";
+import { getEntries } from "@/lib/entries/actions";
 import { createClient } from "@/lib/supabase/server";
 import DashboardShell from "./shell";
+import DashboardContent from "./content";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -12,16 +14,16 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
+  let entries: Awaited<ReturnType<typeof getEntries>> = [];
+  try {
+    entries = await getEntries();
+  } catch (err) {
+    console.error("getEntries failed:", err);
+  }
+
   return (
     <DashboardShell userEmail={user.email}>
-      <div className="py-24 text-center">
-        <h2 className="text-3xl font-bold text-white">
-          Welcome{user.email ? `, ${user.email.split("@")[0]}` : ""}
-        </h2>
-        <p className="mt-2 text-zinc-400">
-          Dashboard is loading...
-        </p>
-      </div>
+      <DashboardContent initialEntries={entries} />
     </DashboardShell>
   );
 }
