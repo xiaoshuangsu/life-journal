@@ -1,6 +1,6 @@
 "use client";
 
-import { badgeClasses } from "@/lib/emotion-colors";
+import { badgeStyle } from "@/lib/emotion-colors";
 import type { Entry } from "@/lib/entries/actions";
 
 type EntryPreviewProps = {
@@ -19,7 +19,10 @@ function getAnalysis(entry: Entry) {
 
 function moodBadge(emotion: string) {
   return (
-    <span className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${badgeClasses(emotion)}`}>
+    <span
+      className="rounded-full px-2 py-0.5 text-[10px] font-medium"
+      style={badgeStyle(emotion)}
+    >
       {emotion}
     </span>
   );
@@ -49,7 +52,10 @@ export default function EntryPreview({
             {formatFullDate(date)}
           </h4>
           {dominantEmotion && (
-            <span className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${badgeClasses(dominantEmotion)}`}>
+            <span
+              className="rounded-full px-2 py-0.5 text-[10px] font-medium"
+              style={badgeStyle(dominantEmotion)}
+            >
               {dominantEmotion}
             </span>
           )}

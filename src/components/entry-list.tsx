@@ -1,6 +1,6 @@
 import type { Entry } from "@/lib/entries/actions";
 import { deleteEntry } from "@/lib/entries/actions";
-import { badgeClasses } from "@/lib/emotion-colors";
+import { badgeStyle } from "@/lib/emotion-colors";
 import DeleteButton from "./delete-button";
 
 type EntryListProps = {
@@ -17,7 +17,10 @@ function getAnalysis(entry: Entry) {
 function moodBadge(emotion: string | null | undefined) {
   if (!emotion) return null;
   return (
-    <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${badgeClasses(emotion)}`}>
+    <span
+      className="rounded-full px-2.5 py-0.5 text-xs font-medium"
+      style={badgeStyle(emotion)}
+    >
       {emotion}
     </span>
   );

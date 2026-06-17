@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import MultiSelect from "@/components/multi-select";
-import { dotClass } from "@/lib/emotion-colors";
+import { dotStyle } from "@/lib/emotion-colors";
 import type { Entry } from "@/lib/entries/actions";
 
 type EntrySidebarProps = {
@@ -19,7 +19,12 @@ function getAnalysis(entry: Entry) {
 
 function moodDot(emotion: string | null | undefined) {
   if (!emotion) return null;
-  return <span className={`inline-block h-2 w-2 rounded-full ${dotClass(emotion)} shrink-0`} />;
+  return (
+    <span
+      className="inline-block h-2 w-2 rounded-full shrink-0"
+      style={dotStyle(emotion)}
+    />
+  );
 }
 
 function formatDate(iso: string) {

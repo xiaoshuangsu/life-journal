@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { deleteEntry, updateEntry, generateEntryInsights } from "@/lib/entries/actions";
-import { badgeClasses } from "@/lib/emotion-colors";
+import { badgeStyle } from "@/lib/emotion-colors";
 import type { Entry } from "@/lib/entries/actions";
 
 type EntryDetailProps = {
@@ -19,7 +19,10 @@ function getAnalysis(entry: Entry) {
 
 function moodBadge(emotion: string) {
   return (
-    <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${badgeClasses(emotion)}`}>
+    <span
+      className="rounded-full px-2.5 py-0.5 text-xs font-medium"
+      style={badgeStyle(emotion)}
+    >
       {emotion}
     </span>
   );
