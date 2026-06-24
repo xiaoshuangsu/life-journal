@@ -234,4 +234,79 @@ src/lib/ai/
 
 ### ⏭️ 下一步
 
-- Day 5: 日历热力图 + 情绪流可视化
+---
+
+## 2025-06-17 ~ 2025-06-24 — UI 重构、部署、Insights v1.1
+
+### ✅ 完成
+
+**两栏布局重构**
+- Journal 页改为左右两栏：左侧 Emotion/Topic 下拉筛选 + 日记列表，右侧日记详情/编辑器
+- `+ New Entry` 移至右侧顶部
+- Emotion 和 Topic 筛选从 chips 改为下拉多选框（`MultiSelect` 组件）
+
+**Calendar 页面重写**
+- 新增 Year View（12 月微型日历网格）+ Month View（单月大日历 + 月度统计面板）
+- 日历格子颜色改为按当天出现最多的具体情绪标签着色（不再用泛化的 positive/neutral/negative）
+- 点击日期 → 底部弹出日记预览卡片 → 可跳转到 Journal 详情
+
+**情绪颜色系统统一**
+- 新建 `src/lib/emotion-colors.ts` —— 全站唯一数据源
+- 全部改用 inline style（hex 色值），彻底解决 Tailwind JIT 动态类名编译丢失问题
+- Journal 标签、日历格子、侧栏圆点、预览卡片全部统一着色
+
+**AI Insights v1.1 升级**
+- Prompt 从 3 字段升级为 5 字段：今日片段、此刻的自己、一个发现、成长轨迹、留给明天
+- 新增人生教练角色：温暖、不评判、不说教
+- 用户画像模块扩展：新增 core_values、recurring_conflicts、growth_history
+- UI 自动检测旧格式 insights，隐藏空卡片并显示重新生成按钮
+
+**Vercel 部署**
+- 部署至 https://life-journal-wine.vercel.app
+- 修复环境变量缺失（旧项目与新项目 env 隔离）
+- 修复 Google Fonts 国内无法加载（改用系统字体苹方/Microsoft YaHei）
+- 修复日历/标签颜色在 Vercel 生产环境丢失（Tailwind JIT → inline style）
+
+**Debug 页面**
+- 新增 `/debug` 页面用于检查 Cookies 和 Environment Variables（后删除）
+
+### 🔧 修复记录
+
+- **Dashboard 500 错误**: 环境变量未在 Vercel 新项目中配置
+- **标签颜色不可见**: Tailwind JIT 无法编译 `bg-${color}-500/20` 动态类名 → 全部改为 inline hex
+- **日历格子无色**: 同上 Tailwind 问题 + `avgMood` 改用 `dominantEmotion` 具体情绪
+- **Google Fonts 构建失败**: 国内无法访问 Google Fonts → 改用系统字体
+- **旧 insights 空卡片**: 新增旧格式检测，`"seen" in insights` → 否则显示重新生成按钮
+
+### 📁 新增/变更文件
+
+```
+新增:
+├── src/lib/emotion-colors.ts           # 统一情绪颜色系统
+├── src/lib/ai/insights.ts             # v1.1 5字段 prompt
+├── src/lib/ai/understanding.ts        # 扩展用户画像
+├── src/components/visualizations/
+│   ├── calendar-view.tsx              # Calendar 主页（年/月视图切换）
+│   ├── year-view.tsx                  # 年视图（12月微型日历）
+│   ├── month-view.tsx                 # 月视图（大日历+统计面板）
+│   └── entry-preview.tsx             # 日期点击预览卡片
+├── src/components/multi-select.tsx    # 下拉多选组件
+└── src/app/dashboard/
+    ├── detail.tsx                     # 日记详情（编辑+5卡片Insights）
+    ├── sidebar.tsx                    # 左侧筛选+列表
+    └── content.tsx                    # 三栏 Tab 主布局
+
+变更:
+├── src/app/layout.tsx                 # 移除 Google Fonts
+├── src/app/globals.css                # 系统字体
+├── src/lib/entries/actions.ts         # Insights 类型更新
+└── src/lib/supabase/server.ts         # 移除 try/catch in setAll
+
+删除:
+└── src/components/visualizations/calendar-heatmap.tsx  # 被 calendar-view 替代
+```
+
+### ⏭️ 下一步
+
+- 信息图生成（satori HTML→SVG→PNG）
+- 自定义域名绑定
