@@ -294,7 +294,7 @@ export default function EntryDetail({
             <div className="space-y-3">
               <div className="rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-3">
                 <p className="text-[10px] text-zinc-500 mb-1.5 uppercase tracking-wider">
-                  👁️ 被看见
+                  📝 今日片段
                 </p>
                 <p className="text-sm text-zinc-300 leading-relaxed">
                   {insights.seen}
@@ -302,7 +302,7 @@ export default function EntryDetail({
               </div>
               <div className="rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-3">
                 <p className="text-[10px] text-zinc-500 mb-1.5 uppercase tracking-wider">
-                  🔍 正念观察
+                  🫂 此刻的自己
                 </p>
                 <p className="text-sm text-zinc-300 leading-relaxed">
                   {insights.observation}
@@ -310,7 +310,7 @@ export default function EntryDetail({
               </div>
               <div className="rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-3">
                 <p className="text-[10px] text-zinc-500 mb-1.5 uppercase tracking-wider">
-                  🧩 深层模式
+                  💡 一个发现
                 </p>
                 <p className="text-sm text-zinc-300 leading-relaxed">
                   {insights.hidden_pattern}
@@ -318,7 +318,7 @@ export default function EntryDetail({
               </div>
               <div className="rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-3">
                 <p className="text-[10px] text-zinc-500 mb-1.5 uppercase tracking-wider">
-                  🪞 成长之镜
+                  🌱 成长轨迹
                 </p>
                 <p className="text-sm text-zinc-300 leading-relaxed">
                   {insights.growth_mirror}
@@ -326,7 +326,7 @@ export default function EntryDetail({
               </div>
               <div className="rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-3">
                 <p className="text-[10px] text-zinc-500 mb-1.5 uppercase tracking-wider">
-                  🌿 温和觉察
+                  🌅 留给明天
                 </p>
                 <p className="text-sm text-zinc-300 leading-relaxed">
                   {insights.looking_ahead}
