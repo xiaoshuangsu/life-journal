@@ -52,7 +52,12 @@ export default function EntryDetail({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const analysis = getAnalysis(entry);
-  const insights = analysis?.insights ?? null;
+  const insightsRaw = analysis?.insights ?? null;
+  // Detect old 3-field format — treat as no insights
+  const insights =
+    insightsRaw && "seen" in (insightsRaw as Record<string, unknown>)
+      ? insightsRaw
+      : null;
   const primary = analysis?.primary_emotion;
   const tags = (analysis?.emotion_tags ?? []).filter(
     (t) => t.toLowerCase() !== primary?.toLowerCase()
