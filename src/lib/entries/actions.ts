@@ -24,9 +24,11 @@ export type Entry = {
         summary: string | null;
         keywords?: string[] | null;
         insights?: {
+          seen: string;
           observation: string;
-          reflection: string;
-          future: string;
+          hidden_pattern: string;
+          growth_mirror: string;
+          looking_ahead: string;
         } | null;
       }
     | {
@@ -35,9 +37,11 @@ export type Entry = {
         summary: string | null;
         keywords?: string[] | null;
         insights?: {
+          seen: string;
           observation: string;
-          reflection: string;
-          future: string;
+          hidden_pattern: string;
+          growth_mirror: string;
+          looking_ahead: string;
         } | null;
       }[]
     | null;

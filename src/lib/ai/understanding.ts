@@ -7,6 +7,9 @@ export type UserUnderstanding = {
   recurring_themes: { theme: string; count: number }[];
   emotional_patterns: string[];
   life_context: string[];
+  core_values: string[];
+  recurring_conflicts: string[];
+  growth_history: string[];
 };
 
 /**
@@ -114,6 +117,64 @@ export function buildUserProfile(
     }
   }
 
+  // Core values: inferred from dominant positive emotions and relational keywords
+  const core_values: string[] = [];
+  const familyKw = keywordCounts.get("家人") ?? keywordCounts.get("family") ?? 0;
+  const workKw = keywordCounts.get("工作") ?? keywordCounts.get("work") ?? 0;
+  const healthKw = keywordCounts.get("健康") ?? keywordCounts.get("health") ?? 0;
+  const growthKw = keywordCounts.get("成长") ?? keywordCounts.get("项目") ?? 0;
+
+  if (familyKw >= 2) core_values.push("重视亲情与连接");
+  if (gratefulCount >= 2) core_values.push("在困境中仍能捕捉感恩的时刻");
+  if (workKw >= 3) core_values.push("对事业有深层的投入与责任感");
+  if (healthKw >= 2) core_values.push("将健康视为重要的生活基石");
+  if (growthKw >= 2) core_values.push("渴望持续的自我进化与成长");
+  if (reflectiveCount >= 3) core_values.push("以内省作为理解世界的核心方式");
+  if (core_values.length === 0) {
+    core_values.push("正在探索什么对自己真正重要");
+  }
+
+  // Recurring conflicts: tensions visible in the data
+  const recurring_conflicts: string[] = [];
+  if (workKw >= 3 && stressedCount >= 3) {
+    recurring_conflicts.push("工作投入与身心疲惫之间的拉扯");
+  }
+  if (familyKw >= 2 && anxiousCount >= 2) {
+    recurring_conflicts.push("对家人的深切关心伴随着无法掌控的焦虑感");
+  }
+  if (motivatedCount >= 2 && anxiousCount >= 2) {
+    recurring_conflicts.push("对成长的渴望与对自我要求过高之间的张力");
+  }
+  if (gratefulCount >= 2 && stressedCount >= 2) {
+    recurring_conflicts.push("在感恩与压力之间反复摇摆——能看见美好，却也被现实消耗");
+  }
+  if (recurring_conflicts.length === 0 && entries.length >= 3) {
+    recurring_conflicts.push("正在逐渐厘清自己内心的矛盾所在");
+  }
+
+  // Growth history: track mood improvement over time
+  const growth_history: string[] = [];
+  if (entries.length >= 3) {
+    const recent = entries.slice(-3);
+    const older = entries.slice(0, Math.min(3, entries.length - 3));
+    const recentAvg = recent.reduce((s, e) => s + (e.mood_score ?? 0), 0) / recent.length;
+    const olderAvg = older.length > 0
+      ? older.reduce((s, e) => s + (e.mood_score ?? 0), 0) / older.length
+      : recentAvg;
+    if (recentAvg > olderAvg + 0.1) {
+      growth_history.push("近期情绪基线较之前有所提升，整体在向更明亮的方向移动");
+    }
+    if (reflectiveCount >= 3) {
+      growth_history.push("持续保持自我反思的习惯，这是内在成长的核心驱动力");
+    }
+    if (entries.length >= 5) {
+      growth_history.push(`坚持书写了 ${entries.length} 篇日记——这本身就是一种对自己生命负责的笃定行动`);
+    }
+  }
+  if (growth_history.length === 0) {
+    growth_history.push("成长正在悄然发生，未来的日记将会见证");
+  }
+
   return {
     generated_at: new Date().toISOString(),
     total_entries: entries.length,
@@ -121,5 +182,8 @@ export function buildUserProfile(
     recurring_themes,
     emotional_patterns,
     life_context,
+    core_values,
+    recurring_conflicts,
+    growth_history,
   };
 }

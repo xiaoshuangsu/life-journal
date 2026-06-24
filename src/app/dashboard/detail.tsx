@@ -289,7 +289,15 @@ export default function EntryDetail({
             <div className="space-y-3">
               <div className="rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-3">
                 <p className="text-[10px] text-zinc-500 mb-1.5 uppercase tracking-wider">
-                  🔍 Observation
+                  👁️ 被看见
+                </p>
+                <p className="text-sm text-zinc-300 leading-relaxed">
+                  {insights.seen}
+                </p>
+              </div>
+              <div className="rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-3">
+                <p className="text-[10px] text-zinc-500 mb-1.5 uppercase tracking-wider">
+                  🔍 正念观察
                 </p>
                 <p className="text-sm text-zinc-300 leading-relaxed">
                   {insights.observation}
@@ -297,18 +305,26 @@ export default function EntryDetail({
               </div>
               <div className="rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-3">
                 <p className="text-[10px] text-zinc-500 mb-1.5 uppercase tracking-wider">
-                  🪞 Reflection
+                  🧩 深层模式
                 </p>
                 <p className="text-sm text-zinc-300 leading-relaxed">
-                  {insights.reflection}
+                  {insights.hidden_pattern}
                 </p>
               </div>
               <div className="rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-3">
                 <p className="text-[10px] text-zinc-500 mb-1.5 uppercase tracking-wider">
-                  🌱 Looking Ahead
+                  🪞 成长之镜
                 </p>
                 <p className="text-sm text-zinc-300 leading-relaxed">
-                  {insights.future}
+                  {insights.growth_mirror}
+                </p>
+              </div>
+              <div className="rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-3">
+                <p className="text-[10px] text-zinc-500 mb-1.5 uppercase tracking-wider">
+                  🌿 温和觉察
+                </p>
+                <p className="text-sm text-zinc-300 leading-relaxed">
+                  {insights.looking_ahead}
                 </p>
               </div>
             </div>
