@@ -291,42 +291,35 @@ export default function EntryDetail({
               </p>
             </div>
           ) : (
-            <div className="space-y-3">
-              <div className="rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-3">
-                <p className="text-[10px] text-zinc-500 mb-1.5 uppercase tracking-wider">
-                  📝 今日片段
+            <div className="rounded-xl border border-zinc-700 bg-zinc-900/40 px-5 py-4 space-y-4">
+              <p className="text-xs text-zinc-500 mb-4">💭 今日洞察</p>
+              <div>
+                <p className="text-[11px] text-zinc-500 mb-2">
+                  我看见
                 </p>
                 <p className="text-sm text-zinc-300 leading-relaxed">
                   {insights.seen}
                 </p>
               </div>
-              <div className="rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-3">
-                <p className="text-[10px] text-zinc-500 mb-1.5 uppercase tracking-wider">
-                  🫂 此刻的自己
-                </p>
-                <p className="text-sm text-zinc-300 leading-relaxed">
-                  {insights.observation}
-                </p>
-              </div>
-              <div className="rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-3">
-                <p className="text-[10px] text-zinc-500 mb-1.5 uppercase tracking-wider">
-                  💡 一个发现
+              <div className="pt-3">
+                <p className="text-[11px] text-zinc-500 mb-2">
+                  我发现
                 </p>
                 <p className="text-sm text-zinc-300 leading-relaxed">
                   {insights.hidden_pattern}
                 </p>
               </div>
-              <div className="rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-3">
-                <p className="text-[10px] text-zinc-500 mb-1.5 uppercase tracking-wider">
-                  🌱 成长轨迹
+              <div className="pt-3">
+                <p className="text-[11px] text-zinc-500 mb-2">
+                  我想告诉你
                 </p>
                 <p className="text-sm text-zinc-300 leading-relaxed">
                   {insights.growth_mirror}
                 </p>
               </div>
-              <div className="rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-3">
-                <p className="text-[10px] text-zinc-500 mb-1.5 uppercase tracking-wider">
-                  🌅 留给明天
+              <div className="pt-3">
+                <p className="text-[11px] text-zinc-500 mb-2">
+                  留一个问题给未来的你
                 </p>
                 <p className="text-sm text-zinc-300 leading-relaxed">
                   {insights.looking_ahead}

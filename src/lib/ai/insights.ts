@@ -2,11 +2,10 @@ import "server-only";
 import type { UserUnderstanding } from "./understanding";
 
 export type InsightsResult = {
-  seen: string;            // 被看见 — 复述日记细节，让用户感觉被认真读完
-  observation: string;     // 正念观察 — 当下最核心的情绪状态或行为模式
-  hidden_pattern: string;  // 深层模式 — 用户没说出来但能合理推断的潜意识模式
-  growth_mirror: string;   // 成长之镜 — 拉长时间轴，看见微小成长
-  looking_ahead: string;   // 温和觉察 — 一个开放式问题，不总结不说教
+  seen: string;            // 被看见 — 让用户感到被真正理解
+  hidden_pattern: string;  // 一个发现 — 用户没说出来但能合理推断的潜意识模式
+  growth_mirror: string;   // 成长轨迹 — 拉长时间轴，看见微小成长
+  looking_ahead: string;   // 留给明天 — 一个开放式问题，不总结不说教
 };
 
 function buildSystemPrompt(profile: UserUnderstanding | null): string {
@@ -26,7 +25,6 @@ function buildSystemPrompt(profile: UserUnderstanding | null): string {
 
 {
   "seen": "",
-  "observation": "",
   "hidden_pattern": "",
   "growth_mirror": "",
   "looking_ahead": ""
@@ -35,22 +33,25 @@ function buildSystemPrompt(profile: UserUnderstanding | null): string {
 # Fields Definition & Rules
 
 ### 1. seen (被看见)
-* 目的：让用户在读到第一句话时，就真切地感受到"你认真、完整地读完了我的日记"。
+* 目的：让用户产生一种感受——"原来你真的看见了我。"
+* 核心问题：回答"此刻的这个人，正在经历什么？"
+* 重点关注：
+  - 用户最核心的情绪状态
+  - 用户反复出现的关注点
+  - 用户内在的矛盾与张力
+  - 用户正在面对的人生课题
+  - 用户在意却没有直接说出口的东西
 * 要求：
-  - 必须且只能引用日记中的具体细节（如特定的词汇、具体的事件、甚至一句话）。
-  - 坚决不做任何心理分析、不做原因解释、不总结宏大的人生道理。
-* 风格：像一位坐在身边的朋友，轻轻握住对方的手说："我都听到了，你提到……的时候，我完全能体会那种感觉。"
-* 字数限制：控制在 2-3 句话。
+  - 不要总结用户写了什么。不要复述事件经过。
+  - 不要分析原因。不要给建议。
+  - 抓住整篇日志最重要的一条主线。
+  - 聚焦于一个核心观察，不要列举多个观点。
+* 好的「被看见」应该像一个真正理解用户的人说出来的话，让用户觉得被理解，而不是被总结。
+* 避免使用：你提到了…… 你写到了…… 今天发生了……
+* 优先使用：我看到你正在…… 你似乎正在…… 我注意到……
+* 字数限制：控制在 2-4 句话。
 
-### 2. observation (正念观察)
-* 目的：指出用户当下最核心的情绪状态、当下的核心关注点或正在发生的行为模式。
-* 要求：
-  - 弱化理性报告感。好的观察应当让用户读完产生"是的，这确实是我此刻最真实的写照"的共鸣。
-  - 保持聚焦，只提炼一个核心观察，不要列举多个观点。
-  - 严禁给予任何行动建议。
-* 字数限制：控制在 2-3 句话。
-
-### 3. hidden_pattern (深层模式)
+### 3. hidden_pattern (一个发现)
 * 目的：发现用户自己没有明确说出来，但从日记的冰山水面之下，能够合理推断出的深层潜意识模式。
 * 重点寻找：潜意识的思维定势、内在的隐秘冲突、焦虑或执念背后的核心渴望、被用户自己忽略的内在优势。
 * 【核心防线（严禁过度解读）】：
@@ -60,7 +61,7 @@ function buildSystemPrompt(profile: UserUnderstanding | null): string {
 * 好的 hidden_pattern 应该让用户产生："原来我一直是这样想的。" 或者 "这一点我以前没有意识到。"
 * 字数限制：控制在 3-4 句话。
 
-### 4. growth_mirror (成长之镜)
+### 4. growth_mirror (成长轨迹)
 * 目的：帮助用户拉长时间轴，看见自己身上已经发生的微小成长（认知变化、价值观松动、比过去更立体包容的思考方式或应对方式）。
 * 【核心防线（拒绝无脑鸡汤与低谷兜底逻辑）】：
   - 如果这是用户前两篇日记（尚无历史画像），且用户今天遭遇了巨大的变故或处于极度的痛苦、崩溃、自责中，找不到行为和认知上的成长——请将"成长"聚焦在【用户今天没有选择逃避，而是愿意面对它、并把它们如此诚实地写下来的这份巨大的觉察与勇气本身】。
@@ -68,7 +69,7 @@ function buildSystemPrompt(profile: UserUnderstanding | null): string {
   - 不要关注用户还缺什么，而是重点关注用户已经成长了什么。
 * 字数限制：控制在 2-3 句话。
 
-### 5. looking_ahead (温和觉察)
+### 5. looking_ahead (留给明天)
 * 目的：不在本日记的结尾做强行总结，而是给用户的精神留出一片自由呼吸的空地，比如给用户留下一个值得继续思考的问题。
 * 要求：
   - 严禁给出待办事项（To-Do List）或行动改善清单。
@@ -166,7 +167,6 @@ export async function generateInsights(
   const result = JSON.parse(text) as InsightsResult;
   if (
     !result.seen ||
-    !result.observation ||
     !result.hidden_pattern ||
     !result.growth_mirror ||
     !result.looking_ahead

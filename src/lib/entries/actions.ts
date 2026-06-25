@@ -27,7 +27,6 @@ export type Entry = {
         life_themes?: string[] | null;
         insights?: {
           seen: string;
-          observation: string;
           hidden_pattern: string;
           growth_mirror: string;
           looking_ahead: string;
@@ -42,7 +41,6 @@ export type Entry = {
         life_themes?: string[] | null;
         insights?: {
           seen: string;
-          observation: string;
           hidden_pattern: string;
           growth_mirror: string;
           looking_ahead: string;

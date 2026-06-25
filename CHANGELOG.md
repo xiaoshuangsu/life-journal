@@ -355,3 +355,33 @@ src/lib/supabase/server.ts         # 恢复 try/catch in setAll
 
 - 信息图生成（satori HTML→SVG→PNG）
 - 自定义域名绑定
+
+---
+
+## v1.3.0 — 2025-06-25 — Insights 重构：合并 seen/observation，单卡片布局
+
+### ✅ 完成
+
+**Insights 结构简化**
+- `seen`（今日片段）和 `observation`（此刻的自己）合并为统一的 `seen`（被看见）
+- 卡片从 5 张减为 4 张：被看见 / 一个发现 / 成长轨迹 / 留给明天
+- 四段内容合并为单卡片「💭 今日洞察」，内部分段：我看见 / 我发现 / 我想告诉你 / 留一个问题给未来的你
+
+**被看见 prompt 重写**
+- 核心问题：回答"此刻的这个人，正在经历什么？"
+- 禁止复述事件经过、禁止分析原因、禁止给建议
+- 新增句法锚点：✅ 我看到你正在... / ❌ 你提到了...
+- 聚焦一条主线，不列举多个观点
+
+### 📁 变更文件
+
+```
+src/lib/ai/insights.ts       # seen/observation 合并，prompt 重写
+src/app/dashboard/detail.tsx # UI 5→4 卡片，单卡片四段布局
+src/lib/entries/actions.ts   # 移除 observation 字段
+```
+
+### ⏭️ 下一步
+
+- 信息图生成（satori HTML→SVG→PNG）
+- 自定义域名绑定
