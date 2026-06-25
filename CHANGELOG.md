@@ -385,3 +385,28 @@ src/lib/entries/actions.ts   # 移除 observation 字段
 
 - 信息图生成（satori HTML→SVG→PNG）
 - 自定义域名绑定
+
+---
+
+## v1.3.1 — 2025-06-25 — hidden_pattern 四类模式升级
+
+### ✅ 完成
+
+**hidden_pattern prompt 重构**
+- 从通用"寻找潜意识模式"改为四类定向搜索：
+  1. 用户口头信念与真实情绪之间的矛盾
+  2. 用户追求的东西与已经拥有的东西之间的错位
+  3. 用户不断重复出现的人生课题（自由与安全、连接与独处等）
+  4. 用户试图解决的问题，是否其实在保护某种更深层需求
+- 新增约束：只选最明显的一个来写，深入一个胜过浅尝四个
+
+### 📁 变更文件
+
+```
+src/lib/ai/insights.ts       # hidden_pattern 四类模式 prompt
+```
+
+### ⏭️ 下一步
+
+- 信息图生成（satori HTML→SVG→PNG）
+- 自定义域名绑定
