@@ -105,7 +105,7 @@ export default function DashboardContent({
       {/* Tab content */}
       {tab === "journal" && (
         <div className="flex gap-0 min-h-[calc(100vh-12rem)]">
-          <div className="w-80 shrink-0 border-r border-slate-200 dark:border-zinc-800 pr-0">
+          <div className="w-80 shrink-0 pr-0">
             <EntrySidebar
               entries={entries}
               selectedId={selectedId}

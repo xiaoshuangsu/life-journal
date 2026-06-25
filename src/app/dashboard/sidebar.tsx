@@ -109,7 +109,8 @@ export default function EntrySidebar({
   const hasFilters = search || emotionFilter.size > 0 || keywordFilter.size > 0;
 
   return (
-    <nav className="flex flex-col h-full py-3">
+    <div className="h-full p-3">
+    <nav className="flex flex-col h-full rounded-2xl bg-white dark:bg-slate-900/40 dark:backdrop-blur-md shadow-sm p-4">
       {/* Search */}
       <div className="px-3 mb-3">
         <input
@@ -220,5 +221,6 @@ export default function EntrySidebar({
         </p>
       </div>
     </nav>
+    </div>
   );
 }

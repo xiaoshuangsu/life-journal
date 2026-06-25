@@ -45,7 +45,7 @@ export default function EntryEditor({ onEntryCreated }: EntryEditorProps) {
   }
 
   return (
-    <div className="rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4 transition-colors">
+    <div className="rounded-2xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-slate-900/40 dark:backdrop-blur-md shadow-sm p-6 transition-colors">
       <textarea
         ref={textareaRef}
         value={content}

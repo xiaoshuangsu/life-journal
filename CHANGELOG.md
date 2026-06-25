@@ -461,3 +461,31 @@ src/lib/ai/insights.ts       # hidden_pattern 四类模式 prompt
 
 - 信息图生成（satori HTML→SVG→PNG）
 - 自定义域名绑定
+
+---
+
+## v1.4.1 — 2025-06-25 — UI 卡片包裹重构
+
+### ✅ 完成
+
+**区域卡片模块化**
+- 左侧栏整体包裹 `rounded-2xl bg-white dark:bg-slate-900/40 shadow-sm p-4` 卡片
+- 右侧日记详情包裹 `rounded-2xl bg-white dark:bg-slate-900/40 shadow-sm p-6` 卡片
+- Insights 卡片圆角升级为 `rounded-2xl`，统一视觉语言
+- 编辑器同等待遇：`rounded-2xl shadow-sm p-6`
+- 右侧面板 `space-y-4` 间距，卡片之间有呼吸感
+- 暗色模式 `dark:backdrop-blur-md` 毛玻璃效果
+
+### 📁 变更文件
+
+```
+src/app/dashboard/content.tsx   # 移除左侧 border-r
+src/app/dashboard/detail.tsx    # 内容卡片 + Insights 卡片重构
+src/app/dashboard/sidebar.tsx   # 左侧卡片包裹
+src/components/entry-editor.tsx # 编辑器卡片升级
+```
+
+### ⏭️ 下一步
+
+- 信息图生成（satori HTML→SVG→PNG）
+- 自定义域名绑定
