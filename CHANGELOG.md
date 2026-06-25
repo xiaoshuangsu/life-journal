@@ -310,3 +310,48 @@ src/lib/ai/
 
 - 信息图生成（satori HTML→SVG→PNG）
 - 自定义域名绑定
+
+---
+
+## v1.2.0 — 2025-06-25 — 三层关键词系统
+
+### ✅ 完成
+
+**关键词系统重构**
+- 将原先单一的 `keywords` 字段拆分为三层架构：
+
+| 层 | 字段 | 用途 | 展示 |
+|---|---|---|---|
+| 系统层 | `keywords` | 搜索、筛选、关联 | ❌ |
+| 分析层 | `topics` | 统计、月报、Topic 筛选 | ❌ |
+| 用户层 | `life_themes` | 人生主题 | ✅ ✨ 今日主题 |
+
+- `life_themes` 要求 2-6 汉字，聚焦价值观、内在冲突、成长方向、深层需求
+- 例如"陪妹妹住院"→「家庭陪伴」而非「健康」；"看纸质书"→「精神休息」而非「阅读」
+
+**Prompt 更新**
+- `analyze.ts` 输出从 5 字段扩展为 7 字段（新增 `topics`、`life_themes`）
+- `life_themes` 有独立的产品原则：不是总结用户做了什么，而是总结用户今天在经历什么
+
+**UI 更新**
+- 日记详情：`Key` 区域替换为 `✨ 今日主题`，展示 `life_themes`
+- 侧栏 Topic 筛选：数据源从 `keywords` 切换为 `topics`
+- `keywords` 不再出现在任何 UI 中
+
+**数据库**
+- `analysis_results` 新增 `topics TEXT[]` 和 `life_themes TEXT[]` 列
+
+### 📁 变更文件
+
+```
+src/lib/ai/analyze.ts              # 新 prompt: keywords + topics + life_themes
+src/lib/entries/actions.ts         # 类型 + insert/select 增加新字段
+src/app/dashboard/detail.tsx       # Key → ✨ 今日主题
+src/app/dashboard/sidebar.tsx      # Topic 筛选读 topics
+src/lib/supabase/server.ts         # 恢复 try/catch in setAll
+```
+
+### ⏭️ 下一步
+
+- 信息图生成（satori HTML→SVG→PNG）
+- 自定义域名绑定

@@ -23,6 +23,8 @@ export type Entry = {
         primary_emotion: string | null;
         summary: string | null;
         keywords?: string[] | null;
+        topics?: string[] | null;
+        life_themes?: string[] | null;
         insights?: {
           seen: string;
           observation: string;
@@ -36,6 +38,8 @@ export type Entry = {
         primary_emotion: string | null;
         summary: string | null;
         keywords?: string[] | null;
+        topics?: string[] | null;
+        life_themes?: string[] | null;
         insights?: {
           seen: string;
           observation: string;
@@ -83,6 +87,8 @@ export async function createEntry(content: string) {
       mood_score: analysis.mood_score,
       summary: analysis.summary,
       keywords: analysis.keywords,
+      topics: analysis.topics,
+      life_themes: analysis.life_themes,
     });
 
     // 4. Update entry status
@@ -96,7 +102,7 @@ export async function createEntry(content: string) {
       .from("entries")
       .select(
         `id, content, word_count, mood_score, status, created_at, entry_date,
-         analysis:analysis_results(emotion_tags, primary_emotion, summary, keywords, insights)`
+         analysis:analysis_results(emotion_tags, primary_emotion, summary, keywords, topics, life_themes, insights)`
       )
       .eq("id", entry.id)
       .single();
@@ -132,7 +138,7 @@ export async function getEntries(): Promise<Entry[]> {
     .select(
       `
       id, content, word_count, mood_score, status, created_at, entry_date,
-      analysis:analysis_results(emotion_tags, primary_emotion, summary, keywords, insights)
+      analysis:analysis_results(emotion_tags, primary_emotion, summary, keywords, topics, life_themes, insights)
     `
     )
     .eq("user_id", user.id)
@@ -183,6 +189,8 @@ export async function updateEntry(entryId: string, content: string) {
       mood_score: analysis.mood_score,
       summary: analysis.summary,
       keywords: analysis.keywords,
+      topics: analysis.topics,
+      life_themes: analysis.life_themes,
     });
     await serviceClient
       .from("entries")
@@ -201,7 +209,7 @@ export async function updateEntry(entryId: string, content: string) {
     .from("entries")
     .select(
       `id, content, word_count, mood_score, status, created_at, entry_date,
-       analysis:analysis_results(emotion_tags, primary_emotion, summary, keywords, insights)`
+       analysis:analysis_results(emotion_tags, primary_emotion, summary, keywords, topics, life_themes, insights)`
     )
     .eq("id", entryId)
     .single();
@@ -294,7 +302,7 @@ export async function generateEntryInsights(entryId: string) {
     .from("entries")
     .select(
       `id, content, word_count, mood_score, status, created_at, entry_date,
-       analysis:analysis_results(emotion_tags, primary_emotion, summary, keywords, insights)`
+       analysis:analysis_results(emotion_tags, primary_emotion, summary, keywords, topics, life_themes, insights)`
     )
     .eq("id", entryId)
     .single();

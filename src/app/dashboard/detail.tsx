@@ -251,17 +251,17 @@ export default function EntryDetail({
           </div>
         </div>
 
-        {/* Keywords */}
-        {analysis?.keywords && analysis.keywords.length > 0 && (
+        {/* Life Themes */}
+        {analysis?.life_themes && analysis.life_themes.length > 0 && (
           <div className="flex items-center gap-2">
-            <span className="text-[11px] text-zinc-600 w-12 shrink-0">Key</span>
+            <span className="text-[11px] text-zinc-600 w-12 shrink-0">✨</span>
             <div className="flex items-center gap-1.5 flex-wrap">
-              {analysis.keywords.map((kw) => (
+              {analysis.life_themes.map((theme) => (
                 <span
-                  key={kw}
-                  className="rounded-md bg-zinc-800 px-2 py-0.5 text-[10px] text-zinc-500"
+                  key={theme}
+                  className="rounded-full bg-zinc-800 px-3 py-1 text-[11px] text-zinc-300"
                 >
-                  {kw}
+                  {theme}
                 </span>
               ))}
             </div>

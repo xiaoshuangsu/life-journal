@@ -43,8 +43,8 @@ function collectFacets(entries: Entry[]) {
     for (const tag of a?.emotion_tags ?? []) {
       emotions.set(tag, (emotions.get(tag) ?? 0) + 1);
     }
-    for (const kw of a?.keywords ?? []) {
-      keywords.set(kw, (keywords.get(kw) ?? 0) + 1);
+    for (const t of a?.topics ?? []) {
+      keywords.set(t, (keywords.get(t) ?? 0) + 1);
     }
   }
 
