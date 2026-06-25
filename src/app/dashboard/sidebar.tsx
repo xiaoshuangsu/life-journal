@@ -123,26 +123,22 @@ export default function EntrySidebar({
       </div>
 
       {/* Emotion + Topic dropdowns — same row */}
-      <div className="px-3 mb-2 flex gap-2">
+      <div className="px-3 mb-2 grid grid-cols-2 gap-2 w-full">
         {facets.emotions.length > 0 && (
-          <div className="flex-1">
-            <MultiSelect
-              label="Emotion"
-              options={facets.emotions}
-              selected={emotionFilter}
-              onChange={toggleEmotion}
-            />
-          </div>
+          <MultiSelect
+            label="Emotion"
+            options={facets.emotions}
+            selected={emotionFilter}
+            onChange={toggleEmotion}
+          />
         )}
         {facets.keywords.length > 0 && (
-          <div className="flex-1">
-            <MultiSelect
-              label="Topic"
-              options={facets.keywords}
-              selected={keywordFilter}
-              onChange={toggleKeyword}
-            />
-          </div>
+          <MultiSelect
+            label="Topic"
+            options={facets.keywords}
+            selected={keywordFilter}
+            onChange={toggleKeyword}
+          />
         )}
       </div>
 

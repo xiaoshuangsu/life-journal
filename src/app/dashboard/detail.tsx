@@ -258,7 +258,7 @@ export default function EntryDetail({
           {/* Life Themes */}
           {analysis?.life_themes && analysis.life_themes.length > 0 && (
             <div className="flex items-center gap-2">
-              <span className="text-[11px] text-zinc-400 dark:text-zinc-600 w-12 shrink-0">✨</span>
+              <span className="text-[11px] text-zinc-400 dark:text-zinc-600 w-12 shrink-0">Themes</span>
               <div className="flex items-center gap-1.5 flex-wrap">
                 {analysis.life_themes.map((theme) => (
                   <span

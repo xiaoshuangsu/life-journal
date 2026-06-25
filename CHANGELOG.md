@@ -519,3 +519,39 @@ src/components/multi-select.tsx # 下拉框圆角
 
 - 信息图生成（satori HTML→SVG→PNG）
 - 自定义域名绑定
+
+---
+
+## v1.4.3 — 2025-06-25 — 下拉筛选器重构 + Themes 标签
+
+### ✅ 完成
+
+**MultiSelect 下拉菜单全面重构**
+- 容器：`min-w-[14rem] rounded-xl p-2` + `shadow-xl backdrop-blur-md`
+- 选项：`flex justify-between px-3 py-2 rounded-lg` + hover 高亮
+- 复选框：`h-4 w-4 rounded` 黑白反色
+- Emotion 选项前带彩色情绪小圆点
+- 滚动条完全隐藏（`scrollbar-none` utility）
+- 数量靠右 `tabular-nums`
+
+**Trigger 按钮极简化**
+- 父容器 `grid grid-cols-2 gap-2 w-full` 确保各占 50%
+- 按钮内部仅两个固定元素：分类名 + `▾` 箭头
+- 不显示任何动态文本，彻底消除重叠/换行问题
+
+**Themes 标签重命名**
+- `✨` → `Themes`
+
+### 📁 变更文件
+
+```
+src/components/multi-select.tsx  # 下拉菜单 + trigger 全面重构
+src/app/dashboard/sidebar.tsx    # 父容器 grid-cols-2
+src/app/dashboard/detail.tsx     # ✨ → Themes
+src/app/globals.css              # scrollbar-none utility
+```
+
+### ⏭️ 下一步
+
+- 信息图生成（satori HTML→SVG→PNG）
+- 自定义域名绑定
