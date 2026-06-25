@@ -40,7 +40,7 @@ export default function MultiSelect({
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="flex w-full items-center justify-between rounded-lg border border-slate-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900 px-3 py-2 text-xs transition-colors hover:border-slate-300 dark:hover:border-zinc-700"
+        className="flex w-full items-center justify-between rounded-xl border border-slate-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900 px-4 py-2 text-xs transition-colors hover:border-slate-300 dark:hover:border-zinc-700"
       >
         <span className="text-zinc-400 dark:text-zinc-500">{label}</span>
         <span

@@ -118,7 +118,7 @@ export default function EntrySidebar({
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search entries..."
-          className="w-full rounded-lg border border-slate-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900 px-3 py-2 text-xs text-zinc-800 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:border-zinc-400 dark:focus:border-zinc-600 focus:outline-none transition-colors"
+          className="w-full rounded-xl border border-slate-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900 px-4 py-2 text-xs text-zinc-800 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:border-zinc-400 dark:focus:border-zinc-600 focus:outline-none transition-colors"
         />
       </div>
 
@@ -184,9 +184,9 @@ export default function EntrySidebar({
               <button
                 key={entry.id}
                 onClick={() => onSelect(entry.id)}
-                className={`w-full text-left rounded-lg px-3 py-2.5 transition-colors ${
+                className={`w-full text-left rounded-xl px-3 py-2.5 transition-all ${
                   isSelected
-                    ? "bg-slate-200/70 dark:bg-zinc-800 ring-1 ring-slate-300 dark:ring-zinc-700"
+                    ? "bg-slate-100/80 dark:bg-white/10 shadow-sm ring-1 ring-slate-200 dark:ring-white/10"
                     : "hover:bg-slate-100 dark:hover:bg-zinc-800/50"
                 }`}
               >

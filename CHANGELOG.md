@@ -489,3 +489,33 @@ src/components/entry-editor.tsx # 编辑器卡片升级
 
 - 信息图生成（satori HTML→SVG→PNG）
 - 自定义域名绑定
+
+---
+
+## v1.4.2 — 2025-06-25 — UI 细节精致化
+
+### ✅ 完成
+
+**左侧列表选中态优化**
+- 选中日记卡片：`bg-slate-100/80 dark:bg-white/10` + `shadow-sm` + `ring-1 ring-slate-200 dark:ring-white/10`
+- 圆角 `rounded-xl`，过渡 `transition-all`，层次感明显
+
+**搜索框与下拉框精致化**
+- `rounded-xl px-4 py-2`，更圆润，文字不再贴边
+
+**顶部导航栏悬浮感**
+- `backdrop-blur-md` + `bg-white/60 dark:bg-transparent`
+- 滚动时透明悬浮毛玻璃效果
+
+### 📁 变更文件
+
+```
+src/app/dashboard/shell.tsx     # 导航栏 backdrop-blur
+src/app/dashboard/sidebar.tsx   # 选中态 + 搜索框圆角
+src/components/multi-select.tsx # 下拉框圆角
+```
+
+### ⏭️ 下一步
+
+- 信息图生成（satori HTML→SVG→PNG）
+- 自定义域名绑定

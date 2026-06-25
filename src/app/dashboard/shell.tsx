@@ -15,7 +15,7 @@ export default function DashboardShell({
   return (
     <div className="min-h-screen">
       {/* Top nav bar */}
-      <header className="sticky top-0 z-10 border-b border-zinc-200/60 dark:border-zinc-800 bg-white/70 dark:bg-zinc-950/80 backdrop-blur transition-colors duration-500">
+      <header className="sticky top-0 z-10 border-b border-transparent dark:border-white/5 bg-white/60 dark:bg-transparent backdrop-blur-md transition-colors duration-500">
         <div className="mx-auto flex h-14 max-w-4xl items-center justify-between px-4">
           <span className="font-semibold text-zinc-800 dark:text-white tracking-tight">
             Life Journal
