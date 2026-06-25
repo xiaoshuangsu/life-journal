@@ -81,7 +81,7 @@ export default function EntrySidebar({
       }
       if (keywordFilter.size > 0) {
         const a = getAnalysis(entry);
-        const kws = a?.keywords ?? [];
+        const kws = a?.topics ?? [];
         if (!kws.some((k) => keywordFilter.has(k))) return false;
       }
       return true;
@@ -117,7 +117,7 @@ export default function EntrySidebar({
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search entries..."
-          className="w-full rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-2 text-xs text-white placeholder:text-zinc-600 focus:border-zinc-600 focus:outline-none"
+          className="w-full rounded-lg border border-slate-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900 px-3 py-2 text-xs text-zinc-800 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:border-zinc-400 dark:focus:border-zinc-600 focus:outline-none transition-colors"
         />
       </div>
 
@@ -154,7 +154,7 @@ export default function EntrySidebar({
               setEmotionFilter(new Set());
               setKeywordFilter(new Set());
             }}
-            className="text-[10px] text-zinc-500 hover:text-white transition-colors"
+            className="text-[10px] text-zinc-400 dark:text-zinc-500 hover:text-zinc-800 dark:hover:text-white transition-colors"
           >
             Clear filters
           </button>
@@ -162,17 +162,15 @@ export default function EntrySidebar({
       )}
 
       {/* Divider */}
-      <div className="mx-3 border-t border-zinc-800 mb-2" />
+      <div className="mx-3 border-t border-slate-200 dark:border-zinc-800 mb-2" />
 
       {/* Entry list */}
       {filtered.length === 0 ? (
         <div className="flex flex-1 items-center justify-center px-4">
-          <p className="text-xs text-zinc-600 text-center">
+          <p className="text-xs text-zinc-400 dark:text-zinc-600 text-center">
             {entries.length === 0
               ? "No entries yet."
-              : hasFilters
-                ? "No entries match."
-                : "No entries yet."}
+              : "No entries match."}
           </p>
         </div>
       ) : (
@@ -187,23 +185,23 @@ export default function EntrySidebar({
                 onClick={() => onSelect(entry.id)}
                 className={`w-full text-left rounded-lg px-3 py-2.5 transition-colors ${
                   isSelected
-                    ? "bg-zinc-800 ring-1 ring-zinc-700"
-                    : "hover:bg-zinc-800/50"
+                    ? "bg-slate-200/70 dark:bg-zinc-800 ring-1 ring-slate-300 dark:ring-zinc-700"
+                    : "hover:bg-slate-100 dark:hover:bg-zinc-800/50"
                 }`}
               >
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-[11px] text-zinc-500 shrink-0">
+                  <span className="text-[11px] text-zinc-400 dark:text-zinc-500 shrink-0">
                     {formatDate(entry.created_at)}
                   </span>
                   {moodDot(analysis?.primary_emotion)}
                   {analysis?.primary_emotion && (
-                    <span className="text-[11px] font-medium text-zinc-300 truncate">
+                    <span className="text-[11px] font-medium text-zinc-700 dark:text-zinc-300 truncate">
                       {analysis.primary_emotion}
                     </span>
                   )}
                 </div>
                 {analysis?.summary && (
-                  <p className="text-[12px] text-zinc-500 leading-tight line-clamp-2">
+                  <p className="text-[12px] text-zinc-400 dark:text-zinc-500 leading-tight line-clamp-2">
                     {analysis.summary}
                   </p>
                 )}
@@ -214,8 +212,8 @@ export default function EntrySidebar({
       )}
 
       {/* Footer */}
-      <div className="px-3 pt-2 border-t border-zinc-800">
-        <p className="text-[10px] text-zinc-600">
+      <div className="px-3 pt-2 border-t border-slate-200 dark:border-zinc-800">
+        <p className="text-[10px] text-zinc-400 dark:text-zinc-600">
           {hasFilters
             ? `${filtered.length} of ${entries.length}`
             : `${entries.length} entr${entries.length === 1 ? "y" : "ies"}`}

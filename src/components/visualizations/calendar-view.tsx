@@ -96,8 +96,8 @@ export default function CalendarView({
               }}
               className={`rounded-full px-5 py-1.5 text-sm font-medium transition-all ${
                 view === v
-                  ? "bg-white dark:bg-zinc-700 text-black dark:text-white shadow-sm"
-                  : "text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300"
+                  ? "bg-white dark:bg-zinc-700 text-zinc-800 dark:text-white shadow-sm"
+                  : "text-zinc-400 dark:text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300"
               }`}
             >
               {v === "year" ? "Year View" : "Month View"}
@@ -108,14 +108,14 @@ export default function CalendarView({
         {/* Stats */}
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2">
-            <span className="text-sm text-zinc-500">Total Entries</span>
+            <span className="text-sm text-zinc-400 dark:text-zinc-500">Total Entries</span>
             <span className="text-xl font-bold text-white font-mono tabular-nums">
               {totalEntries}
             </span>
           </div>
-          <span className="text-zinc-700">·</span>
+          <span className="text-zinc-300 dark:text-zinc-700">·</span>
           <div className="flex items-center gap-2">
-            <span className="text-sm text-zinc-500">Days Journaled</span>
+            <span className="text-sm text-zinc-400 dark:text-zinc-500">Days Journaled</span>
             <span className="text-xl font-bold text-white font-mono tabular-nums">
               {daysJournaled}
             </span>

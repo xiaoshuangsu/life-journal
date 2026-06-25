@@ -410,3 +410,54 @@ src/lib/ai/insights.ts       # hidden_pattern 四类模式 prompt
 
 - 信息图生成（satori HTML→SVG→PNG）
 - 自定义域名绑定
+
+---
+
+## v1.4.0 — 2025-06-25 — 双主题系统（治愈暗夜 / 奶油晨曦）
+
+### ✅ 完成
+
+**双主题一键切换**
+- Tailwind v4 启用 `@custom-variant dark` class 模式
+- 新增 `ThemeProvider`（React Context + localStorage 持久化）
+- 右上角导航栏新增 ☀️/🌙 主题切换按钮
+- 两种主题渐变背景：
+  - 暗色：`#11131e → #1a1c29`
+  - 亮色：`#f4f6fa → #e9ecf3`
+- 全局 `transition-colors duration-500` 丝滑过渡
+
+**全组件双主题适配（17 个文件）**
+- 文字颜色：`text-zinc-700 dark:text-zinc-200/300` 确保双模式下清晰可读
+- 输入框/下拉：`bg-white/80 border-slate-200 dark:bg-zinc-800 dark:border-zinc-700`
+- 卡片背景：`bg-white dark:bg-zinc-900` + `shadow-sm`
+- 分割线：`border-slate-200 dark:border-zinc-800`
+- 标签/药丸：`bg-slate-200 text-slate-700 dark:bg-zinc-800 dark:text-zinc-300`
+- 选中态：`bg-slate-200/70 dark:bg-zinc-800 ring-1`
+
+### 📁 变更文件
+
+```
+新增:
+├── src/components/theme-provider.tsx      # 主题 Context + localStorage
+
+变更 (16 files):
+├── src/app/globals.css                    # 启用 class-based dark mode
+├── src/app/layout.tsx                     # 双渐变背景 + ThemeProvider
+├── src/app/page.tsx                       # 首页双主题
+├── src/app/login/page.tsx                 # 登录页背景
+├── src/app/signup/page.tsx                # 注册页背景
+├── src/app/dashboard/shell.tsx            # 导航栏 + 主题切换按钮
+├── src/app/dashboard/content.tsx          # Tab 栏 + 分割线
+├── src/app/dashboard/detail.tsx           # 日记详情全适配
+├── src/app/dashboard/sidebar.tsx          # 搜索/筛选/列表全适配
+├── src/components/auth-form.tsx           # 表单全适配
+├── src/components/entry-editor.tsx        # 编辑器全适配
+├── src/components/entry-list.tsx          # 时间线适配
+├── src/components/multi-select.tsx        # 下拉框全适配
+├── src/components/visualizations/ (4)     # 日历/趋势图适配
+```
+
+### ⏭️ 下一步
+
+- 信息图生成（satori HTML→SVG→PNG）
+- 自定义域名绑定

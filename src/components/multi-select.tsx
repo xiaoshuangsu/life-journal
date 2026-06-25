@@ -18,7 +18,6 @@ export default function MultiSelect({
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  // Close on outside click
   useEffect(() => {
     function handler(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) {
@@ -41,12 +40,14 @@ export default function MultiSelect({
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="flex w-full items-center justify-between rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-2 text-xs transition-colors hover:border-zinc-700"
+        className="flex w-full items-center justify-between rounded-lg border border-slate-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900 px-3 py-2 text-xs transition-colors hover:border-slate-300 dark:hover:border-zinc-700"
       >
-        <span className="text-zinc-500">{label}</span>
+        <span className="text-zinc-400 dark:text-zinc-500">{label}</span>
         <span
           className={`${
-            selected.size > 0 ? "text-white" : "text-zinc-500"
+            selected.size > 0
+              ? "text-zinc-700 dark:text-white"
+              : "text-zinc-400 dark:text-zinc-500"
           }`}
         >
           {summary}
@@ -54,7 +55,7 @@ export default function MultiSelect({
       </button>
 
       {open && (
-        <div className="absolute top-full left-0 right-0 mt-1 rounded-lg border border-zinc-700 bg-zinc-900 shadow-lg z-20 max-h-48 overflow-y-auto">
+        <div className="absolute top-full left-0 right-0 mt-1 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-lg dark:shadow-none z-20 max-h-48 overflow-y-auto">
           {options.map(({ value, count }) => {
             const isSelected = selected.has(value);
             return (
@@ -64,21 +65,21 @@ export default function MultiSelect({
                 onClick={() => onChange(value)}
                 className={`flex w-full items-center justify-between px-3 py-2 text-xs transition-colors text-left ${
                   isSelected
-                    ? "bg-zinc-800 text-white"
-                    : "text-zinc-400 hover:bg-zinc-800/50"
+                    ? "bg-slate-100 dark:bg-zinc-800 text-zinc-800 dark:text-white"
+                    : "text-zinc-500 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-zinc-800/50"
                 }`}
               >
                 <span className="flex items-center gap-2">
                   <span
                     className={`flex h-3.5 w-3.5 items-center justify-center rounded border ${
                       isSelected
-                        ? "border-white bg-white"
-                        : "border-zinc-600"
+                        ? "border-zinc-700 dark:border-white bg-zinc-700 dark:bg-white"
+                        : "border-slate-300 dark:border-zinc-600"
                     }`}
                   >
                     {isSelected && (
                       <svg
-                        className="h-2.5 w-2.5 text-black"
+                        className="h-2.5 w-2.5 text-white dark:text-black"
                         viewBox="0 0 12 12"
                         fill="none"
                       >
@@ -94,7 +95,7 @@ export default function MultiSelect({
                   </span>
                   {value}
                 </span>
-                <span className="text-zinc-600">{count}</span>
+                <span className="text-zinc-400 dark:text-zinc-600">{count}</span>
               </button>
             );
           })}

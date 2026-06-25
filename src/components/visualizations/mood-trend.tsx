@@ -70,7 +70,7 @@ export default function MoodTrend({ entries }: MoodTrendProps) {
   }, [data]);
 
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-5">
+    <div className="rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 p-5 transition-colors">
       {/* Header */}
       <div className="flex items-center justify-between mb-1">
         <h3 className="text-sm font-semibold text-white">Mood Flow</h3>
@@ -82,7 +82,7 @@ export default function MoodTrend({ entries }: MoodTrendProps) {
               className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
                 range === r
                   ? "bg-white text-black"
-                  : "text-zinc-400 hover:text-white hover:bg-zinc-800"
+                  : "text-zinc-400 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800"
               }`}
             >
               {r}d

@@ -41,7 +41,7 @@ export default function EntryList({ entries }: EntryListProps) {
     return (
       <div className="mt-16 flex flex-col items-center text-center">
         <span className="text-5xl">📖</span>
-        <h3 className="mt-4 text-lg font-medium text-zinc-300">
+        <h3 className="mt-4 text-lg font-medium text-zinc-600 dark:text-zinc-300">
           No entries yet
         </h3>
         <p className="mt-1 text-sm text-zinc-500">
@@ -59,7 +59,7 @@ export default function EntryList({ entries }: EntryListProps) {
         {entries.map((entry) => (
           <div
             key={entry.id}
-            className="group rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 transition-colors hover:border-zinc-700"
+            className="group rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 p-4 transition-colors hover:border-zinc-300 dark:hover:border-zinc-700"
           >
             {/* Header: date + mood */}
             <div className="flex items-center justify-between mb-3">
@@ -91,7 +91,7 @@ export default function EntryList({ entries }: EntryListProps) {
             </div>
 
             {/* Content */}
-            <p className="text-sm leading-relaxed text-zinc-200 whitespace-pre-wrap">
+            <p className="text-sm leading-relaxed text-zinc-700 dark:text-zinc-200 whitespace-pre-wrap">
               {entry.content.length > 300
                 ? entry.content.slice(0, 300) + "…"
                 : entry.content}

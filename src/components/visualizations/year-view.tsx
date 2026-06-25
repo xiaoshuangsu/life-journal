@@ -58,7 +58,7 @@ export default function YearView({
         {year !== currentYear && (
           <button
             onClick={() => setYear(currentYear)}
-            className="rounded-full px-3 py-1 text-xs font-medium text-zinc-500 border border-zinc-300 dark:border-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+            className="rounded-full px-3 py-1 text-xs font-medium text-zinc-500 border border-slate-300 dark:border-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
           >
             This Year
           </button>
@@ -119,7 +119,7 @@ export default function YearView({
                       className={`aspect-square flex items-center justify-center rounded-sm text-[10px] font-medium transition-colors text-white/80 ${
                         rec
                           ? "cursor-pointer hover:ring-1 hover:ring-zinc-400"
-                          : "text-zinc-600 cursor-default bg-zinc-800/30"
+                          : "text-zinc-600 cursor-default bg-slate-200/50 dark:bg-zinc-800/30"
                       } ${
                         isToday
                           ? "ring-1 ring-inset ring-zinc-800 dark:ring-zinc-400"

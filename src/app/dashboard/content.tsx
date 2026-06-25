@@ -79,15 +79,15 @@ export default function DashboardContent({
   return (
     <div className="space-y-6">
       {/* Tab bar */}
-      <div className="flex items-center gap-1 border-b border-zinc-800 pb-0">
+      <div className="flex items-center gap-1 border-b border-slate-200 dark:border-zinc-800 pb-0">
         {TABS.map((t) => (
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
             className={`relative px-4 py-2.5 text-sm font-medium transition-colors ${
               tab === t.key
-                ? "text-white"
-                : "text-zinc-500 hover:text-zinc-300"
+                ? "text-zinc-800 dark:text-white"
+                : "text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300"
             }`}
           >
             {t.label}
@@ -97,7 +97,7 @@ export default function DashboardContent({
           </button>
         ))}
 
-        <span className="ml-auto text-xs text-zinc-600">
+        <span className="ml-auto text-xs text-zinc-400 dark:text-zinc-600">
           {entries.length} entr{entries.length === 1 ? "y" : "ies"}
         </span>
       </div>
@@ -105,7 +105,7 @@ export default function DashboardContent({
       {/* Tab content */}
       {tab === "journal" && (
         <div className="flex gap-0 min-h-[calc(100vh-12rem)]">
-          <div className="w-80 shrink-0 border-r border-zinc-800 pr-0">
+          <div className="w-80 shrink-0 border-r border-slate-200 dark:border-zinc-800 pr-0">
             <EntrySidebar
               entries={entries}
               selectedId={selectedId}
@@ -118,7 +118,7 @@ export default function DashboardContent({
               <div className="flex justify-end mb-2">
                 <button
                   onClick={handleNewEntry}
-                  className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
+                  className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                 >
                   <span className="text-base leading-none">+</span>
                   New Entry
@@ -136,7 +136,7 @@ export default function DashboardContent({
                   onUpdated={handleUpdated}
                 />
               ) : (
-                <div className="flex items-center justify-center h-full text-sm text-zinc-500">
+                <div className="flex items-center justify-center h-full text-sm text-zinc-400 dark:text-zinc-500">
                   Select an entry from the left or write a new one.
                 </div>
               )}
@@ -181,8 +181,8 @@ function EmptyState({
   return (
     <div className="flex flex-col items-center justify-center py-24 text-center">
       <span className="text-4xl">{icon}</span>
-      <h3 className="mt-3 text-lg font-medium text-zinc-400">{title}</h3>
-      <p className="mt-1 text-sm text-zinc-600">{children}</p>
+      <h3 className="mt-3 text-lg font-medium text-zinc-500 dark:text-zinc-400">{title}</h3>
+      <p className="mt-1 text-sm text-zinc-400 dark:text-zinc-600">{children}</p>
     </div>
   );
 }

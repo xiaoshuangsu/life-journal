@@ -109,18 +109,18 @@ export default function MonthView({
         <div className="flex items-center justify-center gap-4 mb-5">
           <button
             onClick={prevMonth}
-            className="rounded-full p-1 text-zinc-500 hover:text-white transition-colors"
+            className="rounded-full p-1 text-zinc-400 dark:text-zinc-500 hover:text-zinc-800 dark:hover:text-white transition-colors"
           >
             <svg className="h-4 w-4" viewBox="0 0 16 16">
               <path d="M10 4L6 8l4 4" stroke="currentColor" strokeWidth="1.5" fill="none" />
             </svg>
           </button>
-          <span className="text-lg font-semibold text-white w-52 text-center">
+          <span className="text-lg font-semibold text-zinc-800 dark:text-white w-52 text-center">
             {MONTH_NAMES[viewMonth]} {viewYear}
           </span>
           <button
             onClick={nextMonth}
-            className="rounded-full p-1 text-zinc-500 hover:text-white transition-colors"
+            className="rounded-full p-1 text-zinc-400 dark:text-zinc-500 hover:text-zinc-800 dark:hover:text-white transition-colors"
           >
             <svg className="h-4 w-4" viewBox="0 0 16 16">
               <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" fill="none" />
@@ -129,7 +129,7 @@ export default function MonthView({
           {!isCurrentMonth && (
             <button
               onClick={goToday}
-              className="rounded-full px-3 py-1 text-xs font-medium text-zinc-500 border border-zinc-300 dark:border-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+              className="rounded-full px-3 py-1 text-xs font-medium text-zinc-500 border border-slate-300 dark:border-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
             >
               Today
             </button>
@@ -172,7 +172,7 @@ export default function MonthView({
                 className={`aspect-square rounded-lg flex flex-col items-center justify-center text-sm font-medium transition-colors relative text-white/80 ${
                   rec
                     ? "cursor-pointer hover:ring-1 hover:ring-zinc-400"
-                    : "text-zinc-600 cursor-default bg-zinc-800/30"
+                    : "text-zinc-600 cursor-default bg-slate-200/50 dark:bg-zinc-800/30"
                 } ${
                   isToday
                     ? "ring-1 ring-inset ring-zinc-800 dark:ring-zinc-400"

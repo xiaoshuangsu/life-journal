@@ -5,7 +5,6 @@ import { createEntry } from "@/lib/entries/actions";
 import type { Entry } from "@/lib/entries/actions";
 
 type EntryEditorProps = {
-  /** Callback with the newly created entry for optimistic UI update. */
   onEntryCreated: (entry: Entry) => void;
 };
 
@@ -35,12 +34,10 @@ export default function EntryEditor({ onEntryCreated }: EntryEditorProps) {
   }
 
   function handleKeyDown(e: React.KeyboardEvent) {
-    // Ctrl+Enter / Cmd+Enter to submit
     if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
       e.preventDefault();
       handleSubmit();
     }
-    // Escape to clear
     if (e.key === "Escape") {
       setContent("");
       textareaRef.current?.blur();
@@ -48,7 +45,7 @@ export default function EntryEditor({ onEntryCreated }: EntryEditorProps) {
   }
 
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-4">
+    <div className="rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4 transition-colors">
       <textarea
         ref={textareaRef}
         value={content}
@@ -58,11 +55,11 @@ export default function EntryEditor({ onEntryCreated }: EntryEditorProps) {
         rows={4}
         maxLength={5000}
         disabled={saving}
-        className="w-full resize-none bg-transparent text-base text-white placeholder:text-zinc-500 focus:outline-none"
+        className="w-full resize-none bg-transparent text-base text-zinc-800 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none"
       />
 
       <div className="mt-3 flex items-center justify-between">
-        <span className="text-xs text-zinc-500">
+        <span className="text-xs text-zinc-400 dark:text-zinc-500">
           {content.length > 0
             ? `${content.length} / 5000  —  ⌘↵ to save`
             : "Write naturally. AI will tag your emotions."}
@@ -70,12 +67,12 @@ export default function EntryEditor({ onEntryCreated }: EntryEditorProps) {
 
         <div className="flex items-center gap-2">
           {error && (
-            <span className="text-xs text-red-400">{error}</span>
+            <span className="text-xs text-red-500">{error}</span>
           )}
           <button
             onClick={handleSubmit}
             disabled={!content.trim() || saving}
-            className="rounded-lg bg-white px-4 py-2 text-sm font-medium text-black hover:bg-zinc-200 disabled:opacity-40 transition-colors"
+            className="rounded-lg bg-zinc-800 dark:bg-white px-4 py-2 text-sm font-medium text-white dark:text-black hover:bg-zinc-700 dark:hover:bg-zinc-200 disabled:opacity-40 transition-colors"
           >
             {saving ? "Analyzing..." : "Save & Analyze"}
           </button>
