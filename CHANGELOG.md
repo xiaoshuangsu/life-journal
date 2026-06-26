@@ -555,3 +555,38 @@ src/app/globals.css              # scrollbar-none utility
 
 - 信息图生成（satori HTML→SVG→PNG）
 - 自定义域名绑定
+
+---
+
+## v1.5.0 — 2025-06-26 — 标题输入 + AI 自动生成
+
+### ✅ 完成
+
+**标题系统**
+- 编辑器新增标题输入框（正文上方，分割线分隔）
+- 用户可手动输入，不填时 AI 自动生成 5-10 字标题
+- AI 标题生成复用 `analyzeEntry()` 调用，零额外延迟
+- 数据库 `entries` 新增 `title TEXT` 列
+
+**侧栏简化**
+- 仅显示日期 + 标题（移除 AI 摘要）
+- 旧日记无标题时显示正文前 40 字作为 fallback
+- 搜索同时匹配标题和正文
+
+**详情页**
+- 内容卡片顶部展示标题 `text-xl font-semibold`
+
+### 📁 变更文件
+
+```
+src/lib/ai/analyze.ts           # prompt 新增 title 字段
+src/lib/entries/actions.ts      # Entry 类型 + CRUD 全链路 + 自动标题
+src/components/entry-editor.tsx # 标题输入框
+src/app/dashboard/sidebar.tsx   # 侧栏显示标题 + 搜索匹配标题
+src/app/dashboard/detail.tsx    # 详情页展示标题
+```
+
+### ⏭️ 下一步
+
+- 信息图生成（satori HTML→SVG→PNG）
+- 自定义域名绑定

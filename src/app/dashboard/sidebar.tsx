@@ -71,8 +71,11 @@ export default function EntrySidebar({
 
   const filtered = useMemo(() => {
     return entries.filter((entry) => {
-      if (search && !entry.content.toLowerCase().includes(search.toLowerCase())) {
-        return false;
+      if (search) {
+        const q = search.toLowerCase();
+        const inTitle = entry.title?.toLowerCase().includes(q);
+        const inContent = entry.content.toLowerCase().includes(q);
+        if (!inTitle && !inContent) return false;
       }
       if (emotionFilter.size > 0) {
         const a = getAnalysis(entry);
@@ -186,22 +189,17 @@ export default function EntrySidebar({
                     : "hover:bg-slate-100 dark:hover:bg-zinc-800/50"
                 }`}
               >
-                <div className="flex items-center gap-2 mb-1">
+                <div className="flex items-center gap-2 mb-0.5">
                   <span className="text-[11px] text-zinc-400 dark:text-zinc-500 shrink-0">
                     {formatDate(entry.created_at)}
                   </span>
                   {moodDot(analysis?.primary_emotion)}
-                  {analysis?.primary_emotion && (
-                    <span className="text-[11px] font-medium text-zinc-700 dark:text-zinc-300 truncate">
-                      {analysis.primary_emotion}
-                    </span>
-                  )}
                 </div>
-                {analysis?.summary && (
-                  <p className="text-[12px] text-zinc-400 dark:text-zinc-500 leading-tight line-clamp-2">
-                    {analysis.summary}
-                  </p>
-                )}
+                <p className="text-[13px] font-medium text-zinc-700 dark:text-zinc-200 leading-tight line-clamp-2">
+                  {entry.title
+                    ? entry.title
+                    : entry.content.slice(0, 40) + (entry.content.length > 40 ? "…" : "")}
+                </p>
               </button>
             );
           })}

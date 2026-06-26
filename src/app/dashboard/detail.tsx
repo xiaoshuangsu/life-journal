@@ -208,6 +208,13 @@ export default function EntryDetail({
           {formatFullDate(entry.created_at)}
         </time>
 
+        {/* Title */}
+        {entry.title && (
+          <h2 className="text-xl font-semibold text-zinc-800 dark:text-white">
+            {entry.title}
+          </h2>
+        )}
+
         {/* User content */}
         <div>
           <p className="text-sm leading-relaxed text-zinc-700 dark:text-zinc-200 whitespace-pre-wrap">

@@ -8,6 +8,7 @@ import { buildUserProfile } from "@/lib/ai/understanding";
 
 export type Entry = {
   id: string;
+  title: string | null;
   content: string;
   word_count: number;
   mood_score: number | null;
@@ -54,7 +55,7 @@ export type Entry = {
  * Returns the entry WITH analysis data so the UI can show tags immediately.
  * Also re-processes any stale pending entries on each save.
  */
-export async function createEntry(content: string) {
+export async function createEntry(content: string, title?: string) {
   const supabase = await createClient();
   const {
     data: { user },
@@ -66,8 +67,8 @@ export async function createEntry(content: string) {
   // 1. Save entry with pending status
   const { data: entry, error } = await serviceClient
     .from("entries")
-    .insert({ user_id: user.id, content })
-    .select("id, content, word_count, status, created_at, entry_date")
+    .insert({ user_id: user.id, content, title: title || null })
+    .select("id, title, content, word_count, status, created_at, entry_date")
     .single();
 
   if (error) throw new Error(error.message);
@@ -89,17 +90,24 @@ export async function createEntry(content: string) {
       life_themes: analysis.life_themes,
     });
 
-    // 4. Update entry status
+    // 4. Update entry status + AI title if user didn't provide one
+    const updateData: Record<string, unknown> = {
+      status: "analyzed",
+      mood_score: analysis.mood_score,
+    };
+    if (!entry.title && analysis.title) {
+      updateData.title = analysis.title;
+    }
     await serviceClient
       .from("entries")
-      .update({ status: "analyzed", mood_score: analysis.mood_score })
+      .update(updateData)
       .eq("id", entry.id);
 
     // 5. Fetch the full entry WITH analysis join (separate query, not nested in update)
     const { data: fullEntry } = await serviceClient
       .from("entries")
       .select(
-        `id, content, word_count, mood_score, status, created_at, entry_date,
+        `id, title, content, word_count, mood_score, status, created_at, entry_date,
          analysis:analysis_results(emotion_tags, primary_emotion, summary, keywords, topics, life_themes, insights)`
       )
       .eq("id", entry.id)
@@ -135,7 +143,7 @@ export async function getEntries(): Promise<Entry[]> {
     .from("entries")
     .select(
       `
-      id, content, word_count, mood_score, status, created_at, entry_date,
+      id, title, content, word_count, mood_score, status, created_at, entry_date,
       analysis:analysis_results(emotion_tags, primary_emotion, summary, keywords, topics, life_themes, insights)
     `
     )
@@ -206,7 +214,7 @@ export async function updateEntry(entryId: string, content: string) {
   const { data: fullEntry } = await serviceClient
     .from("entries")
     .select(
-      `id, content, word_count, mood_score, status, created_at, entry_date,
+      `id, title, content, word_count, mood_score, status, created_at, entry_date,
        analysis:analysis_results(emotion_tags, primary_emotion, summary, keywords, topics, life_themes, insights)`
     )
     .eq("id", entryId)
@@ -299,7 +307,7 @@ export async function generateEntryInsights(entryId: string) {
   const { data: fullEntry } = await serviceClient
     .from("entries")
     .select(
-      `id, content, word_count, mood_score, status, created_at, entry_date,
+      `id, title, content, word_count, mood_score, status, created_at, entry_date,
        analysis:analysis_results(emotion_tags, primary_emotion, summary, keywords, topics, life_themes, insights)`
     )
     .eq("id", entryId)

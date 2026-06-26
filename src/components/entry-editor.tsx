@@ -9,6 +9,7 @@ type EntryEditorProps = {
 };
 
 export default function EntryEditor({ onEntryCreated }: EntryEditorProps) {
+  const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -22,7 +23,8 @@ export default function EntryEditor({ onEntryCreated }: EntryEditorProps) {
     setError(null);
 
     try {
-      const entry = await createEntry(trimmed);
+      const entry = await createEntry(trimmed, title.trim() || undefined);
+      setTitle("");
       setContent("");
       onEntryCreated(entry);
       textareaRef.current?.focus();
@@ -46,6 +48,19 @@ export default function EntryEditor({ onEntryCreated }: EntryEditorProps) {
 
   return (
     <div className="rounded-2xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-slate-900/40 dark:backdrop-blur-md shadow-sm p-6 transition-colors">
+      {/* Title input */}
+      <input
+        type="text"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        placeholder="Title (optional)"
+        maxLength={40}
+        disabled={saving}
+        className="w-full bg-transparent border-none text-xl font-semibold text-zinc-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none mb-3"
+      />
+      <div className="border-b border-slate-100 dark:border-white/10 mb-3" />
+
+      {/* Content textarea */}
       <textarea
         ref={textareaRef}
         value={content}

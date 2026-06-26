@@ -1,6 +1,7 @@
 import "server-only";
 
 type AnalysisResult = {
+  title: string;
   emotion_tags: string[];
   primary_emotion: string;
   mood_score: number;
@@ -15,6 +16,7 @@ Given a diary entry, analyze the user's emotional state and return ONLY valid JS
 
 Your response MUST be exactly this JSON structure with no additional text:
 {
+  "title": "short title",
   "emotion_tags": ["tag1", "tag2", "tag3"],
   "primary_emotion": "main emotion",
   "mood_score": 0.0,
@@ -26,7 +28,7 @@ Your response MUST be exactly this JSON structure with no additional text:
 
 Rules for each field:
 
-- emotion_tags: 2-4 tags from [happy, excited, calm, anxious, sad, tired, angry, grateful, hopeful, frustrated, lonely, proud, confused, peaceful, nostalgic, stressed, motivated, content, overwhelmed, reflective]
+- title: A concise title for this journal entry, 5-10 Chinese characters. Capture the emotional essence, not the event. Examples: "自由与焦虑的拉扯" "医院里的漫长等待" "一次久违的家庭聚餐" 2-4 tags from [happy, excited, calm, anxious, sad, tired, angry, grateful, hopeful, frustrated, lonely, proud, confused, peaceful, nostalgic, stressed, motivated, content, overwhelmed, reflective]
 - primary_emotion: the single most dominant emotion
 - mood_score: float from -1.0 (very negative) to 1.0 (very positive)
 - summary: one concise sentence in the same language as the entry, describing the emotional state
@@ -108,6 +110,7 @@ export async function analyzeEntry(
       throw new Error("Invalid analysis result structure");
     }
     // Ensure new fields exist (default to empty if missing from older model output)
+    if (!result.title) result.title = "";
     if (!Array.isArray(result.keywords)) result.keywords = [];
     if (!Array.isArray(result.topics)) result.topics = [];
     if (!Array.isArray(result.life_themes)) result.life_themes = [];
