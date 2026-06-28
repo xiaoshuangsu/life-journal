@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from "react";
 import MultiSelect from "@/components/multi-select";
-import { dotStyle } from "@/lib/emotion-colors";
+import EmotionAvatar from "@/components/emotion-avatar";
+import { badgeStyle, getEmotionColor } from "@/lib/emotion-colors";
 import type { Entry } from "@/lib/entries/actions";
 
 type EntrySidebarProps = {
@@ -15,16 +16,6 @@ function getAnalysis(entry: Entry) {
   const a = entry.analysis;
   if (!a) return null;
   return Array.isArray(a) ? (a[0] ?? null) : a;
-}
-
-function moodDot(emotion: string | null | undefined) {
-  if (!emotion) return null;
-  return (
-    <span
-      className="inline-block h-2 w-2 rounded-full shrink-0"
-      style={dotStyle(emotion)}
-    />
-  );
 }
 
 function formatDate(iso: string) {
@@ -113,7 +104,7 @@ export default function EntrySidebar({
 
   return (
     <div className="h-full p-3">
-    <nav className="flex flex-col h-full rounded-2xl bg-white dark:bg-slate-900/40 dark:backdrop-blur-md shadow-sm p-4">
+    <nav className="flex flex-col h-full rounded-2xl bg-[#FBF9F6]/50 dark:bg-slate-900/40 dark:backdrop-blur-md shadow-sm p-4">
       {/* Search */}
       <div className="px-3 mb-3">
         <input
@@ -174,32 +165,69 @@ export default function EntrySidebar({
           </p>
         </div>
       ) : (
-        <div className="flex-1 overflow-y-auto space-y-0.5 px-2">
+        <div className="flex-1 overflow-y-auto px-2 pt-2 space-y-[18px]">
           {filtered.map((entry) => {
             const analysis = getAnalysis(entry);
             const isSelected = entry.id === selectedId;
+            const primaryEmotion = analysis?.primary_emotion;
+            const tags = analysis?.emotion_tags ?? [];
+            const lifeThemes = analysis?.life_themes ?? [];
 
             return (
               <button
                 key={entry.id}
                 onClick={() => onSelect(entry.id)}
-                className={`w-full text-left rounded-xl px-3 py-2.5 transition-all ${
+                className={`w-full text-left rounded-[20px] p-4 transition-all duration-300 ease-out border-2 relative bg-[#FBF9F6] dark:bg-slate-800/80 ${
                   isSelected
-                    ? "bg-slate-100/80 dark:bg-white/10 shadow-sm ring-1 ring-slate-200 dark:ring-white/10"
-                    : "hover:bg-slate-100 dark:hover:bg-zinc-800/50"
+                    ? `shadow-[0_12px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_12px_30px_rgba(0,0,0,0.2)] -translate-y-0.5`
+                    : "border-stone-300/40 dark:border-white/5 shadow-none translate-y-0"
                 }`}
+                style={
+                  isSelected && primaryEmotion
+                    ? { borderColor: `${getEmotionColor(primaryEmotion).hex}80` }
+                    : undefined
+                }
               >
-                <div className="flex items-center gap-2 mb-0.5">
-                  <span className="text-[11px] text-zinc-400 dark:text-zinc-500 shrink-0">
-                    {formatDate(entry.created_at)}
-                  </span>
-                  {moodDot(analysis?.primary_emotion)}
-                </div>
-                <p className="text-[13px] font-medium text-zinc-700 dark:text-zinc-200 leading-tight line-clamp-2">
-                  {entry.title
-                    ? entry.title
-                    : entry.content.slice(0, 40) + (entry.content.length > 40 ? "…" : "")}
+                {/* Date */}
+                <p className="text-xs font-medium tracking-wide text-stone-400 dark:text-stone-500 mb-1">
+                  {formatDate(entry.created_at)}
                 </p>
+
+                {/* Title + inline emotion icon */}
+                <div className="flex items-center gap-x-2.5 mb-1">
+                  <EmotionAvatar emotion={primaryEmotion} size={20} plain />
+                  <h3 className="text-[15px] font-semibold text-zinc-800 dark:text-zinc-100 leading-snug line-clamp-1">
+                    {entry.title
+                      ? entry.title
+                      : entry.content.slice(0, 40) + (entry.content.length > 40 ? "…" : "")}
+                  </h3>
+                </div>
+
+                {/* Summary */}
+                <p className="text-[12px] text-zinc-400 dark:text-zinc-500 leading-relaxed line-clamp-2 mb-2">
+                  {entry.content.slice(0, 80)}
+                </p>
+
+                {/* Tags */}
+                <div className="flex flex-wrap items-center gap-1">
+                  {tags.slice(0, 1).map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full px-2 py-0.5 text-[10px] font-medium"
+                      style={badgeStyle(tag)}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                  {lifeThemes.slice(0, 1).map((theme) => (
+                    <span
+                      key={theme}
+                      className="rounded-full bg-slate-100 dark:bg-zinc-800 text-slate-500 dark:text-zinc-400 px-2 py-0.5 text-[10px]"
+                    >
+                      {theme}
+                    </span>
+                  ))}
+                </div>
               </button>
             );
           })}

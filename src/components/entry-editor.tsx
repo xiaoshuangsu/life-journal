@@ -47,7 +47,7 @@ export default function EntryEditor({ onEntryCreated }: EntryEditorProps) {
   }
 
   return (
-    <div className="rounded-2xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-slate-900/40 dark:backdrop-blur-md shadow-sm p-6 transition-colors">
+    <div className="rounded-2xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-slate-900/40 dark:backdrop-blur-md shadow-sm p-10 transition-colors">
       {/* Title input */}
       <input
         type="text"
@@ -56,7 +56,7 @@ export default function EntryEditor({ onEntryCreated }: EntryEditorProps) {
         placeholder="Title (optional)"
         maxLength={40}
         disabled={saving}
-        className="w-full bg-transparent border-none text-xl font-semibold text-zinc-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none mb-3"
+        className="w-full bg-transparent border-none text-[20px] font-semibold text-zinc-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none mb-4"
       />
       <div className="border-b border-slate-100 dark:border-white/10 mb-3" />
 
@@ -67,10 +67,10 @@ export default function EntryEditor({ onEntryCreated }: EntryEditorProps) {
         onChange={(e) => setContent(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder="How are you feeling today? Just start writing..."
-        rows={4}
+        rows={6}
         maxLength={5000}
         disabled={saving}
-        className="w-full resize-none bg-transparent text-base text-zinc-800 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none"
+        className="w-full resize-none bg-transparent journal-body text-zinc-800 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none"
       />
 
       <div className="mt-3 flex items-center justify-between">

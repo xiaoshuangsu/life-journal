@@ -590,3 +590,57 @@ src/app/dashboard/detail.tsx    # 详情页展示标题
 
 - 信息图生成（satori HTML→SVG→PNG）
 - 自定义域名绑定
+
+---
+
+## v1.6.0 — 2025-06-26/28 — 排版系统 + 日志卡片重构 + Insights prompt v2
+
+### ✅ 完成
+
+**Typography 排版系统**
+- 字体：MiSans / HarmonyOS / PingFang SC 优先
+- 正文 18px / line-height 1.95 / letter-spacing 0.02em / font-weight 500
+- 标题 font-weight 600，content max-width 720px
+- 卡片 padding 40px，页面 padding 48px
+- Insights 模块间距 40px（用留白替代分割线）
+- 标签 chip 36px 高度 / rounded-full / 15px 字号
+
+**侧栏日志 Character Card**
+- 卡片底色 `#FBF9F6` 统一软糯白
+- 选中态：`shadow-[0_12px_30px_rgba(0,0,0,0.05)]` + `-translate-y-0.5` 微浮
+- 选中时边框亮起为情绪专属色（`border-2` like `border-emerald-300/80`）
+- 日期改为轻量文字（`text-stone-400 text-xs`），移除紫色 badge
+- 标题行左侧新增情绪色彩小圆点（`w-3 h-3`，无 SVG）
+
+**Emotion Avatar 组件**
+- 新建 `emotion-avatar.tsx`：20 种线稿表情（SVG）+ 莫兰迪色系
+- 支持 `plain` 模式：仅显示色彩小圆点
+
+**Insights Prompt v2**
+- 合并 `seen` + `observation` → 统一 `seen`（被看见）
+- `hidden_pattern` 四类定向搜索模式
+- 保存 `prompt v2.md`
+
+### 📁 变更文件
+
+```
+新增:
+├── src/components/emotion-avatar.tsx    # 情绪头像（线稿 + 彩点）
+├── prompt v2.md                        # Insights prompt v2 文档
+├── 排版.md                             # 排版设计规范
+├── 关键词归纳原则.md                    # 三层关键词规范
+
+变更:
+├── src/app/globals.css                 # Typography 系统
+├── src/app/dashboard/detail.tsx        # 排版 + 卡片重构
+├── src/app/dashboard/shell.tsx         # 页面 padding
+├── src/app/dashboard/sidebar.tsx       # Character Card 重构
+├── src/app/dashboard/content.tsx       # 操作栏一行
+├── src/components/entry-editor.tsx     # 编辑器排版
+└── src/components/emotion-avatar.tsx   # 彩色圆点模式
+```
+
+### ⏭️ 下一步
+
+- 信息图生成（satori HTML→SVG→PNG）
+- 自定义域名绑定

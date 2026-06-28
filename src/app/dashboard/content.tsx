@@ -114,18 +114,6 @@ export default function DashboardContent({
           </div>
 
           <div className="flex-1 pl-6 flex flex-col">
-            {!showEditor && entries.length > 0 && (
-              <div className="flex justify-end mb-2">
-                <button
-                  onClick={handleNewEntry}
-                  className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-                >
-                  <span className="text-base leading-none">+</span>
-                  New Entry
-                </button>
-              </div>
-            )}
-
             <div className="flex-1">
               {showEditor || entries.length === 0 ? (
                 <EntryEditor onEntryCreated={handleEntryCreated} />
@@ -134,6 +122,7 @@ export default function DashboardContent({
                   entry={selectedEntry}
                   onDeleted={() => handleDeleted(selectedEntry.id)}
                   onUpdated={handleUpdated}
+                  onNewEntry={handleNewEntry}
                 />
               ) : (
                 <div className="flex items-center justify-center h-full text-sm text-zinc-400 dark:text-zinc-500">

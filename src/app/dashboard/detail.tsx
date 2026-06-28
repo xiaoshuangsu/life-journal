@@ -9,6 +9,7 @@ type EntryDetailProps = {
   entry: Entry;
   onDeleted: () => void;
   onUpdated: (entry: Entry) => void;
+  onNewEntry: () => void;
 };
 
 function getAnalysis(entry: Entry) {
@@ -20,7 +21,7 @@ function getAnalysis(entry: Entry) {
 function moodBadge(emotion: string) {
   return (
     <span
-      className="rounded-full px-2.5 py-0.5 text-xs font-medium"
+      className="journal-chip font-medium"
       style={badgeStyle(emotion)}
     >
       {emotion}
@@ -43,6 +44,7 @@ export default function EntryDetail({
   entry,
   onDeleted,
   onUpdated,
+  onNewEntry,
 }: EntryDetailProps) {
   const [confirming, setConfirming] = useState(false);
   const [editing, setEditing] = useState(false);
@@ -164,25 +166,33 @@ export default function EntryDetail({
 
   // ── View mode ──
   return (
-    <div className="max-w-2xl py-2 space-y-4">
-      {/* Header bar */}
-      <div className="flex items-center justify-end mb-1 px-1">
-        <div className="flex items-center gap-3">
+    <div className="max-w-[720px] py-6 space-y-8">
+      {/* Action bar */}
+      <div className="flex items-center justify-between px-1">
+        <button
+          onClick={onNewEntry}
+          className="flex items-center gap-1.5 text-[15px] text-zinc-400 dark:text-zinc-500 hover:text-zinc-800 dark:hover:text-white transition-colors"
+        >
+          <span className="text-lg leading-none">+</span>
+          New Entry
+        </button>
+
+        <div className="flex items-center gap-4">
           <button
             onClick={handleEdit}
-            className="text-xs text-zinc-400 dark:text-zinc-500 hover:text-zinc-800 dark:hover:text-white transition-colors"
+            className="text-[15px] text-zinc-400 dark:text-zinc-500 hover:text-zinc-800 dark:hover:text-white transition-colors"
           >
             Edit
           </button>
           {!confirming ? (
             <button
               onClick={() => setConfirming(true)}
-              className="text-xs text-zinc-400 dark:text-zinc-600 hover:text-red-400 transition-colors"
+              className="text-[15px] text-zinc-400 dark:text-zinc-600 hover:text-red-400 transition-colors"
             >
               Delete
             </button>
           ) : (
-            <div className="flex items-center gap-2 text-xs">
+            <div className="flex items-center gap-2 text-[15px]">
               <span className="text-zinc-500">Delete?</span>
               <button
                 onClick={handleDelete}
@@ -202,36 +212,33 @@ export default function EntryDetail({
       </div>
 
       {/* Content card */}
-      <div className="rounded-2xl bg-white dark:bg-slate-900/40 dark:backdrop-blur-md shadow-sm p-6 space-y-5">
+      <div className="rounded-2xl bg-white dark:bg-slate-900/40 dark:backdrop-blur-md shadow-sm p-10 space-y-10">
         {/* Date */}
-        <time className="text-sm text-zinc-400 dark:text-zinc-500">
+        <time className="block text-[15px] text-zinc-400 dark:text-zinc-500">
           {formatFullDate(entry.created_at)}
         </time>
 
         {/* Title */}
         {entry.title && (
-          <h2 className="text-xl font-semibold text-zinc-800 dark:text-white">
+          <h2 className="text-[20px] font-semibold text-zinc-800 dark:text-white leading-snug">
             {entry.title}
           </h2>
         )}
 
         {/* User content */}
         <div>
-          <p className="text-sm leading-relaxed text-zinc-700 dark:text-zinc-200 whitespace-pre-wrap">
+          <div className="journal-body text-zinc-700 dark:text-zinc-200 whitespace-pre-wrap">
             {entry.content}
-          </p>
+          </div>
         </div>
 
-        {/* Divider */}
-        <div className="border-t border-slate-200 dark:border-zinc-800" />
-
-        {/* AI Analysis section */}
-        <div className="space-y-4">
+        {/* Mood / Tags / Themes — softer, smaller */}
+        <div className="space-y-6 pt-4">
           {/* Mood bar */}
           {entry.mood_score != null && (
-            <div className="flex items-center gap-3">
-              <span className="text-[11px] text-zinc-400 dark:text-zinc-600 w-12 shrink-0">Mood</span>
-              <div className="flex-1 h-1.5 rounded-full bg-slate-200 dark:bg-zinc-800 overflow-hidden">
+            <div className="flex items-center gap-4">
+              <span className="journal-label w-16 shrink-0">Mood</span>
+              <div className="flex-1 h-2 rounded-full bg-slate-200 dark:bg-zinc-800 overflow-hidden">
                 <div
                   className={`h-full rounded-full ${
                     entry.mood_score >= 0.3
@@ -246,7 +253,7 @@ export default function EntryDetail({
                   }}
                 />
               </div>
-              <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400 tabular-nums w-10 text-right">
+              <span className="text-[15px] font-mono text-zinc-400 dark:text-zinc-500 tabular-nums w-12 text-right">
                 {entry.mood_score > 0 ? "+" : ""}
                 {entry.mood_score.toFixed(2)}
               </span>
@@ -254,9 +261,9 @@ export default function EntryDetail({
           )}
 
           {/* Emotion tags */}
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] text-zinc-400 dark:text-zinc-600 w-12 shrink-0">Tags</span>
-            <div className="flex flex-wrap items-center gap-1.5">
+          <div className="flex items-center gap-4">
+            <span className="journal-label w-16 shrink-0">Tags</span>
+            <div className="flex flex-wrap items-center gap-2">
               {primary && moodBadge(primary)}
               {tags.map((tag) => moodBadge(tag))}
             </div>
@@ -264,13 +271,13 @@ export default function EntryDetail({
 
           {/* Life Themes */}
           {analysis?.life_themes && analysis.life_themes.length > 0 && (
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] text-zinc-400 dark:text-zinc-600 w-12 shrink-0">Themes</span>
-              <div className="flex items-center gap-1.5 flex-wrap">
+            <div className="flex items-center gap-4">
+              <span className="journal-label w-16 shrink-0">Themes</span>
+              <div className="flex flex-wrap items-center gap-2">
                 {analysis.life_themes.map((theme) => (
                   <span
                     key={theme}
-                    className="rounded-full bg-slate-200 text-slate-700 dark:bg-zinc-800 dark:text-zinc-300 px-3 py-1 text-[11px]"
+                    className="journal-chip bg-slate-200 text-slate-600 dark:bg-zinc-800 dark:text-zinc-300"
                   >
                     {theme}
                   </span>
@@ -282,59 +289,60 @@ export default function EntryDetail({
       </div>
 
       {/* AI Insights card */}
-      <div className="space-y-0">
-        {!insights ? (
-          <div
-            className={`rounded-2xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-slate-900/40 dark:backdrop-blur-md shadow-sm px-6 py-5 ${
-              loadingInsights ? "opacity-50" : ""
-            }`}
+      {!insights ? (
+        <div
+          className={`rounded-2xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-slate-900/40 dark:backdrop-blur-md shadow-sm p-10 ${
+            loadingInsights ? "opacity-50" : ""
+          }`}
+        >
+          <button
+            onClick={handleGenerateInsights}
+            disabled={loadingInsights}
+            className="flex items-center gap-2 text-[20px] text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white transition-colors disabled:cursor-wait"
           >
-            <button
-              onClick={handleGenerateInsights}
-              disabled={loadingInsights}
-              className="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white transition-colors disabled:cursor-wait"
-            >
-              <span>{loadingInsights ? "⏳" : "✨"}</span>
-              <span>
-                {loadingInsights ? "Generating insights..." : "Generate AI Insights"}
-              </span>
-            </button>
-            <p className="mt-1.5 text-[11px] text-zinc-400 dark:text-zinc-600">
-              AI will analyze your emotional patterns based on all your journal entries
-            </p>
-          </div>
-        ) : (
-          <div className="rounded-2xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-slate-900/40 dark:backdrop-blur-md shadow-sm px-6 py-5 space-y-4">
-            <p className="text-xs text-zinc-400 dark:text-zinc-500 mb-4">💭 今日洞察</p>
+            <span>{loadingInsights ? "⏳" : "✨"}</span>
+            <span>
+              {loadingInsights ? "Generating insights..." : "Generate AI Insights"}
+            </span>
+          </button>
+          <p className="mt-2 text-[15px] text-zinc-400 dark:text-zinc-600">
+            AI will analyze your emotional patterns based on all your journal entries
+          </p>
+        </div>
+      ) : (
+        <div className="rounded-2xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-slate-900/40 dark:backdrop-blur-md shadow-sm p-10">
+          <p className="text-[15px] text-zinc-400 dark:text-zinc-500 mb-10">💭 今日洞察</p>
+
+          <div className="space-y-10">
             <div>
-              <p className="text-[11px] text-zinc-400 dark:text-zinc-500 mb-2">我看见</p>
-              <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+              <p className="text-[15px] text-zinc-400 dark:text-zinc-500 mb-4">我看见</p>
+              <p className="journal-body text-zinc-700 dark:text-zinc-300">
                 {insights.seen}
               </p>
             </div>
-            <div className="pt-3">
-              <p className="text-[11px] text-zinc-400 dark:text-zinc-500 mb-2">我发现</p>
-              <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+            <div>
+              <p className="text-[15px] text-zinc-400 dark:text-zinc-500 mb-4">我发现</p>
+              <p className="journal-body text-zinc-700 dark:text-zinc-300">
                 {insights.hidden_pattern}
               </p>
             </div>
-            <div className="pt-3">
-              <p className="text-[11px] text-zinc-400 dark:text-zinc-500 mb-2">我想告诉你</p>
-              <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+            <div>
+              <p className="text-[15px] text-zinc-400 dark:text-zinc-500 mb-4">我想告诉你</p>
+              <p className="journal-body text-zinc-700 dark:text-zinc-300">
                 {insights.growth_mirror}
               </p>
             </div>
-            <div className="pt-3">
-              <p className="text-[11px] text-zinc-400 dark:text-zinc-500 mb-2">留一个问题给未来的你</p>
-              <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+            <div>
+              <p className="text-[15px] text-zinc-400 dark:text-zinc-500 mb-4">留一个问题给未来的你</p>
+              <p className="journal-body text-zinc-700 dark:text-zinc-300">
                 {insights.looking_ahead}
               </p>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
-      <p className="mt-8 text-[11px] text-zinc-400 dark:text-zinc-700 text-center">
+      <p className="text-[15px] text-zinc-400 dark:text-zinc-700 text-center">
         {entry.word_count} words
       </p>
     </div>
