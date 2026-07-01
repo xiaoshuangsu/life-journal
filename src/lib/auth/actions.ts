@@ -42,7 +42,7 @@ export async function login(
   }
 
   revalidatePath("/", "layout");
-  redirect("/dashboard");
+  redirect("/home");
 }
 
 /**
@@ -89,7 +89,7 @@ export async function signup(
 
   // Email confirmation is disabled — auto-sign-in + redirect
   revalidatePath("/", "layout");
-  redirect("/dashboard");
+  redirect("/home");
 }
 
 /**

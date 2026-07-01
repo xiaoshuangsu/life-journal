@@ -644,3 +644,65 @@ src/app/dashboard/detail.tsx    # 详情页展示标题
 
 - 信息图生成（satori HTML→SVG→PNG）
 - 自定义域名绑定
+
+---
+
+## v2.0.0 — 2025-07-01 — Mobile-First + Companion-First 架构重构
+
+### ✅ 完成
+
+**全新信息架构**
+- 从三 Tab 单页改为四路由：Home / Journal / Life / Profile
+- `/` 自动跳转 `/home`
+- 登录/注册后跳转 `/home`
+
+**Home 页（Today's Mirror）**
+- Today's Mirror：日期 + AI 轻声问候
+- Continue Writing 入口（未写日记时显示）
+- 编辑器嵌入
+- 时间分组最近记录（Today / Yesterday / Last Week / Earlier）
+
+**Journal 页**
+- 搜索 + Emotion/Topic 多选筛选
+- 时间分组日记列表（JournalList 组件）
+- 点击卡片 → push 模式全屏详情
+- ← 返回按钮
+
+**Life 页**
+- 从 `profiles.deep_understanding` 读取用户画像
+- 展示：性格 / 主题 / 情绪模式 / 核心价值观 / 内在冲突 / 成长轨迹
+- 空状态引导
+
+**Profile 页**
+- 邮箱展示 + 登出按钮
+
+**Bottom Navigation（Mobile）**
+- 四 Tab：Home / Journal / Life / Profile
+- 线条图标，当前页高亮
+- 固定底部 + safe-area
+
+**AppShell**
+- 统一 Top Header + BottomNav 包裹
+- 登录/注册页不显示 Shell
+
+**Design Language 文档**
+- 新增 `Design Language.md`：设计哲学、原则、视觉语言规范
+
+### 📁 新增文件
+
+```
+src/app/home/                          # Home 页
+src/app/journal/                       # Journal 页
+src/app/life/                          # Life 页
+src/app/profile/                       # Profile 页
+src/components/navigation/app-shell.tsx
+src/components/navigation/bottom-nav.tsx
+src/components/journal-list.tsx        # 时间分组列表
+Design Language.md                    # 设计语言
+Life Journal 功能总览 v1.6.md          # 功能总览
+```
+
+### ⏭️ 下一步
+
+- 信息图生成（satori HTML→SVG→PNG）
+- 自定义域名绑定

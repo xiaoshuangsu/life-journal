@@ -1,10 +1,17 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import ThemeProvider from "@/components/theme-provider";
+import AppShell from "@/components/navigation/app-shell";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Life Journal",
   description: "Your AI-powered personal memory and emotion insight system.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -15,7 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark h-full antialiased">
       <body className="min-h-full flex flex-col transition-colors duration-500 bg-gradient-to-br from-[#f4f6fa] via-[#edf1f7] to-[#e9ecf3] dark:from-[#11131e] dark:via-[#141724] dark:to-[#1a1c29]">
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <AppShell>{children}</AppShell>
+        </ThemeProvider>
       </body>
     </html>
   );
