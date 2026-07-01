@@ -14,11 +14,14 @@ const EntryDetail = dynamic(
 export default function HomeContent({
   userEmail,
   initialEntries,
+  initialMirror,
 }: {
   userEmail?: string;
   initialEntries: Entry[];
+  initialMirror: string | null;
 }) {
   const [entries, setEntries] = useState<Entry[]>(initialEntries);
+  const [mirror] = useState<string | null>(initialMirror);
   const [view, setView] = useState<"home" | "editor" | "detail">("home");
   const [selectedEntry, setSelectedEntry] = useState<Entry | null>(null);
 
@@ -98,9 +101,15 @@ export default function HomeContent({
           }).format(new Date())}
         </p>
         <p className="text-xl md:text-2xl font-medium text-zinc-700 dark:text-zinc-200 leading-relaxed max-w-md mx-auto">
-          {todayEntry
-            ? "You have already written today. Take a moment to reflect."
-            : "Take a deep breath. Write what is on your mind."}
+          {todayEntry ? (
+            "You have already written today. Take a moment to reflect."
+          ) : (
+            <>
+              世界总在催促我们成为别人。
+              <br />
+              而这里，只想陪你慢慢看见真正的自己。
+            </>
+          )}
         </p>
         {!todayEntry && (
           <button
@@ -111,6 +120,18 @@ export default function HomeContent({
           </button>
         )}
       </div>
+
+      {/* Today's Mirror */}
+      {mirror && (
+        <div className="rounded-3xl bg-[#FAF8F5] dark:bg-slate-900/60 px-6 md:px-8 py-8 md:py-10">
+          <p className="text-[11px] text-zinc-400 dark:text-zinc-500 tracking-wide mb-6 uppercase">
+            Today's Mirror
+          </p>
+          <div className="journal-body text-zinc-600 dark:text-zinc-300 whitespace-pre-wrap leading-relaxed">
+            {mirror}
+          </div>
+        </div>
+      )}
 
       {/* Editor (if not yet written today) */}
       {!todayEntry && (

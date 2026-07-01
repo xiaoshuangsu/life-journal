@@ -706,3 +706,36 @@ Life Journal 功能总览 v1.6.md          # 功能总览
 
 - 信息图生成（satori HTML→SVG→PNG）
 - 自定义域名绑定
+
+---
+
+## v2.1.0 — 2025-07-01 — Today's Mirror + Hero 文案
+
+### ✅ 完成
+
+**Hero 文案更新**
+- "世界总在催促我们成为别人。而这里，只想陪你慢慢看见真正的自己。"
+
+**Today's Mirror 系统**
+- 新增 `daily_mirrors` 表（RLS + 权限）
+- Mirror AI prompt：4 层结构（Invitation → Observation → Meaning → Continuation）
+- 80-150 字，温度 0.7，综合今天 + 过去 14 天 + 长期画像
+- 每天生成一次，当天缓存
+
+**Welcome Mirror（新用户 < 3 篇日记）**
+- 硬编码欢迎文案，基于 Manifesto 第一性原理
+- AI 首先是 Witness，不急于分析
+- "你好。很高兴，在这里遇见你…从今天开始。"
+
+### 📁 新增文件
+
+```
+src/lib/ai/mirror.ts              # Mirror AI prompt + generation
+src/lib/mirrors/actions.ts        # getTodayMirror Server Action
+Today's Mirror.md                 # Mirror 设计文档
+```
+
+### ⏭️ 下一步
+
+- 信息图生成（satori HTML→SVG→PNG）
+- 自定义域名绑定
